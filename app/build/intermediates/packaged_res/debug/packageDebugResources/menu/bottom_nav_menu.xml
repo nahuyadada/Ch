@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_diary"
+        android:icon="@drawable/diary2"
+        android:title="Diary" />
+
+    <item
+        android:id="@+id/navigation_food_log"
+        android:icon="@drawable/compass"
+        android:title="Food Log" />
+
+    <item
+        android:id="@+id/navigation_results"
+        android:icon="@drawable/results"
+        android:title="Results" />
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/profile2"
+        android:title="Profile" />
+
+</menu>
