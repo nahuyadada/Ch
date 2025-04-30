@@ -97,7 +97,7 @@
                 android:background="@drawable/rounded_panel"
                 android:padding="16dp"
                 android:layout_marginBottom="8dp"
-                android:orientation="vertical"> {/* Changed to vertical */}
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -131,7 +131,7 @@
                         android:padding="4dp"/>
                 </LinearLayout>
 
-                {/* Container for logged breakfast items */}
+
                 <LinearLayout
                     android:id="@+id/layoutBreakfastItems"
                     android:layout_width="match_parent"
