@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">ChowCheck</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="user_name">User Name</string>
+    <string name="user_example_com">user@example.com</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="welcome_to_the_homepage">Welcome to the Homepage!</string>
+    <string name="go_to_profile">Go to Profile</string>
+    <string name="meet_the_developers">Meet the Developers</string>
+    <string name="logout">Logout</string>
+    <string name="about_the_developers">About the Developers</string>
+    <string name="Title">Meet the Developers</string>
+    <string name="developer_name_1">Developer Name 1</string>
+    <string name="short_bio">Short Bio or Fun Fact</string>
+    <string name="developer_name_2">Developer Name 2</string>
+    <string name="short_bio_or_fun_fact">Short Bio or Fun Fact</string>
+    <string name="enter_username">Enter Username</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="login_page">Login</string>
+    <string-array name="gender_array">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
