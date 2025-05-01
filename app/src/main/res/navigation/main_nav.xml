@@ -10,14 +10,13 @@
         android:name="com.example.chowcheck.frag.DiaryFragment"
         android:label="fragment_diary"
         tools:layout="@layout/fragment_diary" >
+
         <action
             android:id="@+id/action_diaryFragment_to_foodLogFragment"
-            app:destination="@id/foodLogFragment">
-            <argument
-                android:name="selectedDateMillis"
-                app:argType="long"
-                android:defaultValue="-1L" />
-        </action>
+            app:destination="@id/foodLogFragment"
+            app:launchSingleTop="true"
+            app:restoreState="true"
+            app:popUpTo="@id/main_nav"  app:popUpToSaveState="true" />
     </fragment>
 
     <fragment
@@ -41,7 +40,12 @@
 
         <action
             android:id="@+id/action_profileFragment_to_resultsTabFragment"
-            app:destination="@id/resultsTabFragment" />
+            app:destination="@id/resultsTabFragment"
+            app:launchSingleTop="true"
+            app:restoreState="true"
+            app:popUpTo="@id/main_nav"
+            app:popUpToSaveState="true" />
+
     </fragment>
 
 </navigation>

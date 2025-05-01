@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+// Import NotificationHelper if it's in the same package, otherwise use full path
+// import com.example.chowcheck.util.NotificationHelper // Example if in util package
 
 class LoginActivity : Activity() {
 
@@ -27,6 +29,10 @@ class LoginActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        // --- Create Notification Channel (Needs to be done once) --- ADD THIS ---
+        NotificationHelper.createNotificationChannel(this)
+        // -------------------------------------------------------------------------
+
         editTextUsername = findViewById(R.id.editTextUsername)
         editTextPassword = findViewById(R.id.editTextPassword)
         buttonLogin = findViewById(R.id.buttonLogin)
@@ -46,25 +52,23 @@ class LoginActivity : Activity() {
                 return@setOnClickListener
             }
 
-            // --- Check credentials against user-specific key ---
-            val passwordKey = getUserPasswordKey(username) // e.g., "john_password"
-            val storedPassword = sharedPreferences.getString(passwordKey, null) // Get password for this user
+            val passwordKey = getUserPasswordKey(username)
+            val storedPassword = sharedPreferences.getString(passwordKey, null)
 
             if (storedPassword != null && password == storedPassword) {
-                // --- Login Successful ---
+                // Login Successful
                 Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
 
-                // --- Save the currently logged-in user ---
                 val editor = sharedPreferences.edit()
                 editor.putString(KEY_LOGGED_IN_USER, username)
                 editor.apply()
 
-                // --- Navigate to Landing Activity ---
+                // Navigate to Landing Activity
                 val intent = Intent(this, LandingActivity::class.java)
                 startActivity(intent)
                 finish() // Finish LoginActivity
             } else {
-                // --- Login Failed ---
+                // Login Failed
                 Toast.makeText(this, "Invalid username or password", Toast.LENGTH_SHORT).show()
             }
         }
@@ -72,11 +76,9 @@ class LoginActivity : Activity() {
         buttonRegister.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
-            // Should not finish() here, allow user to go back to Login if they cancel registration
         }
     }
 
-    // Helper to generate the user-specific password key
     private fun getUserPasswordKey(username: String): String {
         return "${username}${KEY_SUFFIX_PASSWORD}"
     }

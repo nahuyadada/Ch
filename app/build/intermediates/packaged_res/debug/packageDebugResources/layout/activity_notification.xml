@@ -7,14 +7,13 @@
     android:orientation="vertical"
     android:background="#C2FFC7"
     android:padding="20dp"
-    tools:ignore="UseSwitchCompatOrMaterialXml">
-
-    <ImageView
-        android:id="@+id/btnBack"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/back"
-        android:contentDescription="Back Button" />
+    tools:context=".NotificationActivity"
+    tools:ignore="UseSwitchCompatOrMaterialXml"> <ImageView
+    android:id="@+id/btnBack"
+    android:layout_width="24dp"
+    android:layout_height="24dp"
+    android:src="@drawable/back"
+    android:contentDescription="Back Button" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,13 +22,12 @@
         android:background="@drawable/rounded_panel2"
         android:padding="16dp"
         android:layout_marginTop="16dp">
-
         <Switch
             android:id="@+id/switchMealReminder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="48dp"
             android:text="Enable Meal Reminders"/>
-
         <TextView
             android:id="@+id/notificationMeal"
             android:layout_width="wrap_content"
@@ -37,7 +35,6 @@
             android:text="Reminds you of your meals (Breakfast, Lunch, and Dinner.)"
             android:textSize="14sp"
             android:layout_marginTop="8dp"/>
-
     </LinearLayout>
 
     <LinearLayout
@@ -47,23 +44,19 @@
         android:background="@drawable/rounded_panel2"
         android:padding="16dp"
         android:layout_marginTop="16dp">
-
         <Switch
-            android:id="@+id/switchWaterReminder"
-            android:layout_width="match_parent"
+            android:id="@+id/switchWaterReminder" android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Water intake reminders"/>
-
+            android:minHeight="48dp"
+            android:text="Enable Water Reminders"/>
         <TextView
             android:id="@+id/notificationWater"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Reminds you of your water intake hourly to keep you on track."
+            android:text="Reminds you periodically to drink water."
             android:textSize="14sp"
             android:layout_marginTop="8dp"/>
-
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -71,13 +64,12 @@
         android:background="@drawable/rounded_panel2"
         android:padding="16dp"
         android:layout_marginTop="16dp">
-
         <Switch
             android:id="@+id/switchProgressReminder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="48dp"
             android:text="Weekly progress notifications"/>
-
         <TextView
             android:id="@+id/notificationProgress"
             android:layout_width="wrap_content"
@@ -85,7 +77,6 @@
             android:text="Reminds you of the progress that you have weekly."
             android:textSize="14sp"
             android:layout_marginTop="8dp"/>
-
     </LinearLayout>
 
     <LinearLayout
@@ -95,13 +86,12 @@
         android:background="@drawable/rounded_panel2"
         android:padding="16dp"
         android:layout_marginTop="16dp">
-
         <Switch
             android:id="@+id/switchGoalReminder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="48dp"
             android:text="Goal achievement alerts"/>
-
         <TextView
             android:id="@+id/notificationGoal"
             android:layout_width="wrap_content"
@@ -109,7 +99,6 @@
             android:text="Alerts you when you reached any of your goals."
             android:textSize="14sp"
             android:layout_marginTop="8dp"/>
-
     </LinearLayout>
 
 </LinearLayout>

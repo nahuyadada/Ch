@@ -1,68 +1,76 @@
 package com.example.chowcheck
 
-import android.app.Activity
-import android.app.AlertDialog
+// Remove: import android.app.Activity
+import android.content.Context
 import android.content.Intent
-import android.content.Context // Import Context for SharedPreferences
+import android.content.SharedPreferences // Added for clarity
 import android.os.Bundle
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.ListView
-import com.example.chowcheck.frag.ProfileFragment // Import ProfileFragment constants
+import android.widget.Toast // Added for clarity
+// Import AppCompatActivity and AppCompat AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AlertDialog // Use AppCompat AlertDialog
+// Import ProfileFragment constants (already present)
+import com.example.chowcheck.frag.ProfileFragment
 
-
-class SettingsActivity : Activity() {
+// Change inheritance here
+class SettingsActivity : AppCompatActivity() {
 
     private lateinit var listView: ListView
-    private lateinit var buttonGoBack: ImageView
+    private lateinit var buttonGoBack: ImageView // Consider using Toolbar with setSupportActionBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings)
+        setContentView(R.layout.activity_settings) // Ensure this layout exists and is compatible
 
         listView = findViewById(R.id.settingsListView)
-        buttonGoBack = findViewById(R.id.btnBack)
+        buttonGoBack = findViewById(R.id.btnBack) // Ensure R.id.btnBack exists
 
-        // Remove "Profile" from this list
+        // Consider adding a Toolbar and using setSupportActionBar(toolbar)
+        // supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        // toolbar.setNavigationOnClickListener { finish() }
+        // If using Toolbar, you might remove the standalone buttonGoBack ImageView
+
         val settingsOptions = listOf(
-            // "Profile", // Removed
             "Notifications",
-            "Privacy",
             "Security",
             "About Developers",
             "Logout"
         )
 
+        // Use 'this' or 'baseContext' which are valid for AppCompatActivity
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, settingsOptions)
         listView.adapter = adapter
 
         listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             when (position) {
-                // Case 0 is now Notifications
                 0 -> startActivity(Intent(this, NotificationActivity::class.java))
-                1 -> startActivity(Intent(this, PrivacyActivity::class.java))
-                2 -> startActivity(Intent(this, SecurityActivity::class.java))
-                3 -> startActivity(Intent(this, DeveloperActivity::class.java))
-                4 -> showLogoutDialog() // Logout is now position 4
+                1 -> startActivity(Intent(this, SecurityActivity::class.java))
+                2 -> startActivity(Intent(this, DeveloperActivity::class.java))
+                3 -> showLogoutDialog()
+                // Add error handling for unexpected positions if needed
             }
         }
 
+        // If not using a Toolbar with NavigationOnClickListener, keep this:
         buttonGoBack.setOnClickListener {
-            // Simply finish this activity, the standard back press will handle Fragment backstack if needed
             finish()
         }
     }
 
     private fun showLogoutDialog() {
+        // Use the imported AppCompat AlertDialog
         AlertDialog.Builder(this)
             .setTitle("Confirm Logout")
             .setMessage("Are you sure you want to log out?")
             .setPositiveButton("Yes") { _, _ ->
                 // Clear logged-in user status from SharedPreferences
-                val editor = getSharedPreferences(ProfileFragment.USER_DATA_PREFS, MODE_PRIVATE).edit()
+                // Ensure MODE_PRIVATE is used correctly (Context.MODE_PRIVATE)
+                val editor = getSharedPreferences(ProfileFragment.USER_DATA_PREFS, Context.MODE_PRIVATE).edit()
                 editor.remove(ProfileFragment.KEY_LOGGED_IN_USER)
-                // Optionally remove other user-specific data if needed
                 editor.apply()
 
                 // Navigate to LoginActivity and clear the task stack

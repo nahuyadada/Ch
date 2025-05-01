@@ -136,10 +136,8 @@ id optionProgress
 id optionSettings
 id optionTitle
 id optionsContainer
-id profileDiary
 id profileFragment
 id profilePicture
-id profileVisibility
 id resultsTabFragment
 id saveNotesButton
 id securityChangePass
@@ -147,9 +145,7 @@ id securityLinkedAcc
 id separator
 id settingsListView
 id spinnerActivityLevel
-id spinnerProfile
 id spinnerSex
-id spinnerVisibilty
 id spinnerWeeklyChange
 id startingWeightTextView
 id statCurrentWeightValue
@@ -157,7 +153,6 @@ id statWeightChangeLabel
 id statWeightChangeValue
 id statsContainer
 id switch2FA
-id switchDataCollect
 id switchGoalReminder
 id switchMealReminder
 id switchProgressReminder
@@ -166,8 +161,6 @@ id targetWeightTextView
 id teamVision
 id text2FA
 id textChangePass
-id textDataCollect
-id textDiary
 id textLinkedAcc
 id textViewBreakfastLabel
 id textViewBreakfastTotalCalories
@@ -182,7 +175,6 @@ id textViewLoginLink
 id textViewLunchLabel
 id textViewLunchTotalCalories
 id textViewTitle
-id textVisibility
 id tracker_panels
 id tracker_scrollview
 id txtUsername
@@ -200,7 +192,6 @@ layout activity_health_profile
 layout activity_landing
 layout activity_login
 layout activity_notification
-layout activity_privacy
 layout activity_register
 layout activity_security
 layout activity_settings
