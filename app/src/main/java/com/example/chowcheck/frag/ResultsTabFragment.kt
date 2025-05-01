@@ -2,6 +2,7 @@ package com.example.chowcheck.frag
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,18 +11,21 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.chowcheck.R
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import java.text.SimpleDateFormat
-import java.util.*
 import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.formatter.ValueFormatter // For date formatting (optional)import java.text.SimpleDateFormatimport java.util.concurrent.TimeUnit
-import java.util.concurrent.TimeUnit
+import com.github.mikephil.charting.formatter.ValueFormatter
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 class ResultsTabFragment : Fragment() {
 
@@ -42,25 +46,54 @@ class ResultsTabFragment : Fragment() {
     // Data storage
     private lateinit var userDataPreferences: SharedPreferences
     private var loggedInUsername: String? = null
-    private val gson = Gson() // For handling JSON
+    private val gson = Gson()
 
     // Constants for SharedPreferences keys
     companion object {
         const val USER_DATA_PREFS = "UserData"
         const val KEY_LOGGED_IN_USER = "logged_in_user"
         const val BASE_KEY_CALORIE_GOAL = "calorie_goal"
-        const val BASE_KEY_WEIGHT = "weight"
+        const val BASE_KEY_WEIGHT = "weight" // Most recent weight string
         const val BASE_KEY_WEIGHT_GOAL = "weight_goal"
         const val BASE_KEY_STARTING_WEIGHT = "starting_weight"
-        const val BASE_KEY_DAILY_CALORIES_EATEN = "daily_calories_eaten"
-        const val BASE_KEY_WEIGHT_HISTORY = "weight_history" // Key for weight history
-        const val TAG = "ResultsTabFragment" // For logging
+        const val BASE_KEY_DAILY_CALORIES_EATEN = "daily_calories_eaten" // Base for daily totals
+        const val BASE_KEY_WEIGHT_HISTORY = "weight_history" // Key for weight history list
+        const val TAG = "ResultsTabFragment"
 
         // Moved from the second companion object
         fun newInstance(): ResultsTabFragment {
             return ResultsTabFragment()
         }
     }
+
+    // Data class for weight entries (should match DiaryFragment)
+    // Place in a shared file ideally
+    data class WeightEntry(
+        val timestamp: Long, // Milliseconds since epoch
+        val weight: Double
+    )
+
+    // Custom ValueFormatter for displaying dates on the X-axis
+    // *** USES INDEX-BASED APPROACH ***
+    class DateAxisFormatter(private val history: List<WeightEntry>) : ValueFormatter() {
+        // Format for displaying dates (e.g., "May 1")
+        private val dateFormat = SimpleDateFormat("MMM d", Locale.getDefault())
+
+        override fun getAxisLabel(value: Float, axis: com.github.mikephil.charting.components.AxisBase?): String {
+            val index = value.toInt() // Convert the float index from the chart back to an integer
+            // Check if the index is valid within the bounds of our history list
+            return if (index >= 0 && index < history.size) {
+                // Get the timestamp from the original WeightEntry using the index
+                val millis = history[index].timestamp
+                // Format the timestamp into a readable date string
+                dateFormat.format(Date(millis))
+            } else {
+                // If the index is out of bounds, return an empty string
+                ""
+            }
+        }
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -83,13 +116,20 @@ class ResultsTabFragment : Fragment() {
         if (loggedInUsername != null) {
             loadAndDisplayData()
         } else {
-            Toast.makeText(
-                requireContext(),
-                "Please log in to view results.",
-                Toast.LENGTH_SHORT
-            ).show()
+            // Handle not logged in state (e.g., show message, disable views)
+            Toast.makeText(requireContext(), "Please log in to view results.", Toast.LENGTH_SHORT).show()
+            clearUI() // Clear potentially stale data
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        // Reload data when fragment becomes visible again, in case weight was logged elsewhere
+        if (isAdded && loggedInUsername != null) {
+            loadAndDisplayData()
+        }
+    }
+
 
     private fun initializeViews(view: View) {
         goalCaloriesTextView = view.findViewById(R.id.goalCaloriesTextView)
@@ -107,10 +147,28 @@ class ResultsTabFragment : Fragment() {
     }
 
     private fun loadAndDisplayData() {
-        loadCalorieData()
-        loadWeightData()
-        loadWeightHistory()
+        loadCalorieData() // Loads today's calorie summary
+        loadWeightData() // Loads overall weight stats (start, goal, current)
+        loadWeightHistoryAndSetupChart() // Loads history list and updates the chart
         calculateAndSetMotivation()
+    }
+
+    // Clears UI elements if user is not logged in or data is unavailable
+    private fun clearUI() {
+        goalCaloriesTextView.text = "N/A"
+        eatenCaloriesTextView.text = "N/A"
+        leftCaloriesTextView.text = "N/A"
+        caloriesProgressBar.progress = 0
+        averageCaloriesTextView.text = "Avg: N/A kcal"
+        currentWeightTextView.text = "N/A kg"
+        targetWeightTextView.text = "N/A kg"
+        startingWeightTextView.text = "Starting Weight: N/A kg"
+        weightChangeTextView.text = "Gained/Lost: N/A kg"
+        distanceFromTargetTextView.text = "N/A kg from target"
+        weightChartView.clear()
+        weightChartView.setNoDataText("Log in to see weight chart.")
+        weightChartView.invalidate()
+        motivationTextView.text = ""
     }
 
     // --- Helper Functions for SharedPreferences ---
@@ -119,7 +177,8 @@ class ResultsTabFragment : Fragment() {
         return loggedInUsername?.let { "${it}_${baseKey}" }
     }
 
-    private fun getDailyUserDataKey(baseKey: String): String? {
+    // Gets key for data specific to TODAY's date
+    private fun getTodaysDataKey(baseKey: String): String? {
         val todayDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
         return loggedInUsername?.let { "${it}_${baseKey}_$todayDate" }
     }
@@ -127,14 +186,16 @@ class ResultsTabFragment : Fragment() {
     // --- Calorie Data ---
 
     private fun loadCalorieData() {
+        // Goal is user-specific, not date-specific
         val calorieGoalKey = getUserDataKey(BASE_KEY_CALORIE_GOAL)
         val caloriesGoal = userDataPreferences.getInt(calorieGoalKey, 2000) // Default
 
-        val caloriesEatenKey = getDailyUserDataKey(BASE_KEY_DAILY_CALORIES_EATEN) ?: return
+        // Eaten calories are specific to TODAY for this summary view
+        val caloriesEatenKey = getTodaysDataKey(BASE_KEY_DAILY_CALORIES_EATEN) ?: return
         val caloriesEaten = userDataPreferences.getInt(caloriesEatenKey, 0)
 
         val caloriesLeft = (caloriesGoal - caloriesEaten).coerceAtLeast(0)
-        val progress = if (caloriesGoal > 0) (caloriesEaten * 100 / caloriesGoal) else 0
+        val progress = if (caloriesGoal > 0) (caloriesEaten * 100 / caloriesGoal).coerceIn(0,100) else 0
 
         goalCaloriesTextView.text = "$caloriesGoal kcal"
         eatenCaloriesTextView.text = "$caloriesEaten kcal"
@@ -145,54 +206,76 @@ class ResultsTabFragment : Fragment() {
         averageCaloriesTextView.text = "Avg: ${String.format("%.1f", averageCalories)} kcal"
     }
 
+    // Calculates average daily calories over the last 'days'
     private fun calculateAverageCalories(days: Int = 7): Double {
         val calendar = Calendar.getInstance()
         var totalCalories = 0
         var validDays = 0
+        val keyDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
         for (i in 0 until days) {
-            val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(calendar.time)
-            val caloriesEatenKey =
-                loggedInUsername?.let { "${it}_${BASE_KEY_DAILY_CALORIES_EATEN}_$date" }
+            val dateStr = keyDateFormat.format(calendar.time)
+            val caloriesEatenKey = loggedInUsername?.let { "${it}_${BASE_KEY_DAILY_CALORIES_EATEN}_$dateStr" }
+
             if (caloriesEatenKey != null && userDataPreferences.contains(caloriesEatenKey)) {
                 totalCalories += userDataPreferences.getInt(caloriesEatenKey, 0)
                 validDays++
             }
-            calendar.add(Calendar.DAY_OF_MONTH, -1)
+            calendar.add(Calendar.DAY_OF_MONTH, -1) // Go back one day
         }
 
         return if (validDays > 0) totalCalories.toDouble() / validDays else 0.0
     }
 
-    // --- Weight Data ---
+    // --- Weight Data (Overall Stats) ---
 
     private fun loadWeightData() {
+        // These keys are user-specific, not date-specific
         val currentWeightKey = getUserDataKey(BASE_KEY_WEIGHT)
         val targetWeightKey = getUserDataKey(BASE_KEY_WEIGHT_GOAL)
         val startingWeightKey = getUserDataKey(BASE_KEY_STARTING_WEIGHT)
 
-        val currentWeight =
-            userDataPreferences.getString(currentWeightKey, "N/A")?.toDoubleOrNull() ?: 0.0
-        val targetWeight =
-            userDataPreferences.getString(targetWeightKey, "N/A")?.toDoubleOrNull() ?: 0.0
-        val startingWeight =
-            userDataPreferences.getString(startingWeightKey, "N/A")?.toDoubleOrNull() ?: 0.0
+        // Use the most recent weight stored under the simple key
+        val currentWeightStr = userDataPreferences.getString(currentWeightKey, null)
+        val currentWeight = currentWeightStr?.toDoubleOrNull() ?: 0.0
 
-        currentWeightTextView.text = "${String.format("%.1f", currentWeight)} kg"
-        targetWeightTextView.text = "${String.format("%.1f", targetWeight)} kg"
-        startingWeightTextView.text = "Starting Weight: ${String.format("%.1f", startingWeight)} kg"
+        val targetWeightStr = userDataPreferences.getString(targetWeightKey, null)
+        val targetWeight = targetWeightStr?.toDoubleOrNull() ?: 0.0
 
-        val weightChange = currentWeight - startingWeight
-        weightChangeTextView.text = "Gained/Lost: ${String.format("%.1f", weightChange)} kg"
+        val startingWeightStr = userDataPreferences.getString(startingWeightKey, null)
+        val startingWeight = startingWeightStr?.toDoubleOrNull() ?: 0.0
 
-        val distanceFromTarget = targetWeight - currentWeight
-        distanceFromTargetTextView.text = "${String.format("%.1f", distanceFromTarget)} kg from target"
+        currentWeightTextView.text = if (currentWeight > 0) "${String.format("%.1f", currentWeight)} kg" else "N/A kg"
+        targetWeightTextView.text = if (targetWeight > 0) "${String.format("%.1f", targetWeight)} kg" else "N/A kg"
+        startingWeightTextView.text = if (startingWeight > 0) "Starting Weight: ${String.format("%.1f", startingWeight)} kg" else "Starting Weight: N/A kg"
+
+        if (currentWeight > 0 && startingWeight > 0) {
+            val weightChange = currentWeight - startingWeight
+            weightChangeTextView.text = "Gained/Lost: ${String.format("%+.1f", weightChange)} kg" // Always show sign
+        } else {
+            weightChangeTextView.text = "Gained/Lost: N/A kg"
+        }
+
+        if (currentWeight > 0 && targetWeight > 0) {
+            val distanceFromTarget = targetWeight - currentWeight
+            distanceFromTargetTextView.text = "${String.format("%.1f", distanceFromTarget)} kg from target"
+        } else {
+            distanceFromTargetTextView.text = "N/A kg from target"
+        }
     }
 
     // --- Weight History and Chart ---
 
-    private fun loadWeightHistory() {
-        val weightHistoryKey = getUserDataKey(BASE_KEY_WEIGHT_HISTORY)
+    // Loads the history list and passes it to updateWeightChart
+    private fun loadWeightHistoryAndSetupChart() {
+        if (loggedInUsername == null) {
+            weightChartView.clear()
+            weightChartView.setNoDataText("Log in to see weight chart.")
+            weightChartView.invalidate()
+            return
+        }
+
+        val weightHistoryKey = getUserDataKey(BASE_KEY_WEIGHT_HISTORY) ?: return
         val json = userDataPreferences.getString(weightHistoryKey, null)
 
         val weightHistory: List<WeightEntry> = try {
@@ -204,75 +287,89 @@ class ResultsTabFragment : Fragment() {
             }
         } catch (e: Exception) {
             Log.e(TAG, "Error parsing weight history: ${e.message}")
-            emptyList() // Return an empty list in case of error
+            emptyList()
         }
+
+        // Log the loaded history for debugging
+        Log.d(TAG, "Loaded Weight History: ${weightHistory.joinToString { "(${Date(it.timestamp)}, ${it.weight})" }}")
+
 
         updateWeightChart(weightHistory)
     }
 
-    // Function to update the weight chart (replace with your chart library logic)
+    // Updates the chart using the loaded weight history list
+    // *** USES INDEX-BASED APPROACH FOR X-AXIS ***
     private fun updateWeightChart(weightHistory: List<WeightEntry>) {
-        Log.d(TAG, "Weight History for Chart: $weightHistory")
+        if (!isAdded) return // Ensure fragment is attached
 
         if (weightHistory.isEmpty()) {
-            weightChartView.clear() // Clear previous data
+            weightChartView.clear()
             weightChartView.setNoDataText("No weight history yet.")
-            weightChartView.invalidate() // Refresh the chart
+            weightChartView.invalidate()
             return
         }
 
-        // 1. Convert WeightEntry list to MPAndroidChart Entry list
-        // Sort by timestamp to ensure the line connects points chronologically
+        // 1. Sort history by timestamp (important for line connection and formatter)
         val sortedHistory = weightHistory.sortedBy { it.timestamp }
+
+        // 2. Create chart entries using INDEX as X-value
         val entries = ArrayList<Entry>()
-        val referenceTimestamp = sortedHistory.firstOrNull()?.timestamp ?: System.currentTimeMillis() // Use first entry or now as reference
-
-        sortedHistory.forEach { entry ->
-            // Convert timestamp to float (e.g., days since the first entry)
-            // Using days might be better for visualization than raw milliseconds
-            val daysSinceReference = TimeUnit.MILLISECONDS.toDays(entry.timestamp - referenceTimestamp).toFloat()
-            entries.add(Entry(daysSinceReference, entry.weight.toFloat()))
+        sortedHistory.forEachIndexed { index, weightEntry ->
+            entries.add(Entry(index.toFloat(), weightEntry.weight.toFloat()))
         }
+        Log.d(TAG, "Chart Entries (Index, Weight): ${entries.joinToString { "(${it.x}, ${it.y})" }}")
 
-        // 2. Create a DataSet
+
+        // 3. Create a DataSet
         val dataSet = LineDataSet(entries, "Weight (kg)")
-        dataSet.color = R.color.nav_item_selected_dark_green // Customize color
-        dataSet.valueTextColor = R.color.nav_item_selected_dark_green
-        dataSet.setCircleColor(R.color.nav_item_selected_dark_green) // Point color
+        // Use ContextCompat to safely get colors
+        val primaryColor = ContextCompat.getColor(requireContext(), R.color.nav_item_selected_dark_green)
+        dataSet.color = primaryColor
+        dataSet.valueTextColor = primaryColor
+        dataSet.setCircleColor(primaryColor)
         dataSet.circleRadius = 4f
         dataSet.lineWidth = 2f
-        // Add more customization as needed (e.g., dataSet.mode = LineDataSet.Mode.CUBIC_BEZIER)
+        dataSet.setDrawValues(false) // Hide numerical values on points
 
-        // 3. Create LineData object
+        // 4. Create LineData object
         val lineData = LineData(dataSet)
 
-        // 4. Configure Chart Appearance (Optional but Recommended)
+        // 5. Configure Chart Appearance
         weightChartView.description.isEnabled = false // Hide description label
-        weightChartView.xAxis.position = com.github.mikephil.charting.components.XAxis.XAxisPosition.BOTTOM
+        val xAxis = weightChartView.xAxis
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.textColor = Color.DKGRAY
+        xAxis.granularity = 1f // Show label for each entry index
+        xAxis.isGranularityEnabled = true
+
+        // ---> Apply the custom DateAxisFormatter <---
+        xAxis.valueFormatter = DateAxisFormatter(sortedHistory) // Pass the sorted list
+
+        xAxis.setLabelRotationAngle(-45f) // Rotate labels to prevent overlap
+        xAxis.setAvoidFirstLastClipping(true) // Try to show first/last labels
+
+        // Adjust label count dynamically (optional, MPAndroidChart tries to do this automatically)
+        // xAxis.setLabelCount(min(sortedHistory.size, 6), true) // Show max 6 labels, force count
+
         weightChartView.axisRight.isEnabled = false // Hide right Y-axis
-        weightChartView.legend.isEnabled = true // Show legend (e.g., "Weight (kg)")
+        weightChartView.axisLeft.textColor = Color.DKGRAY
+        weightChartView.legend.isEnabled = true
+        weightChartView.legend.textColor = Color.DKGRAY
 
-        // Optional: Format X-axis labels to show dates (more complex)
-        // You might need a custom ValueFormatter for this based on 'daysSinceReference' and 'referenceTimestamp'
+        // Add some padding
+        weightChartView.setExtraOffsets(5f, 10f, 5f, 10f)
 
-        // 5. Set data and refresh
+
+        // 6. Set data and refresh
         weightChartView.data = lineData
-        weightChartView.invalidate() // Refresh the chart
+        weightChartView.invalidate() // Refresh the chart to display the data
     }
+
 
     // --- Motivation ---
 
     private fun calculateAndSetMotivation() {
-        // Placeholder: Implement motivational logic
-        motivationTextView.text = "Looking good! Keep up the effort."
+        // Placeholder: Implement motivational logic based on progress
+        motivationTextView.text = "Keep up the great work!"
     }
-
-    // --- Data Classes ---
-
-    // Data class to represent a single weight entry with timestamp
-    data class WeightEntry(
-        val timestamp: Long, // Use Long for timestamp (milliseconds since epoch)
-        val weight: Double
-    )
-
 }

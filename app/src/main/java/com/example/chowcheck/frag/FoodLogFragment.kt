@@ -4,23 +4,33 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.example.chowcheck.R // Use correct R import
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import com.example.chowcheck.R
+import com.example.chowcheck.viewmodel.DateViewModel
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
-// Data class to hold information about a single logged food item
+// Data class (keep as before or move to shared location)
 data class FoodEntry(
     val foodName: String,
     val calories: Int,
-    val timestamp: Long, // Store time as milliseconds for easier sorting/formatting
-    val mealType: String // "Breakfast", "Lunch", or "Dinner"
+    val timestamp: Long,
+    val mealType: String
 )
 
 class FoodLogFragment : Fragment() {
@@ -30,11 +40,9 @@ class FoodLogFragment : Fragment() {
     private lateinit var buttonAddBreakfast: ImageButton
     private lateinit var buttonAddLunch: ImageButton
     private lateinit var buttonAddDinner: ImageButton
-    // Layouts to hold logged items
     private lateinit var layoutBreakfastItems: LinearLayout
     private lateinit var layoutLunchItems: LinearLayout
     private lateinit var layoutDinnerItems: LinearLayout
-    // TextViews for total meal calories
     private lateinit var textViewBreakfastTotalCalories: TextView
     private lateinit var textViewLunchTotalCalories: TextView
     private lateinit var textViewDinnerTotalCalories: TextView
@@ -42,109 +50,127 @@ class FoodLogFragment : Fragment() {
     // --- SharedPreferences & User Data ---
     private lateinit var userDataPreferences: SharedPreferences
     private var loggedInUsername: String? = null
-    private val gson = Gson() // For JSON conversion
+    private val gson = Gson()
 
-    // --- Constants for SharedPreferences Keys ---
+    // --- Date Management ---
+    // Get the Shared ViewModel instance
+    private val dateViewModel: DateViewModel by activityViewModels()
+
+    // Date formats (consistent with ViewModel and DiaryFragment)
+    private val keyDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    private val displayDateFormat = SimpleDateFormat("d MMMM, EEEE", Locale.getDefault())
+
+    // --- Constants ---
     companion object {
-        const val USER_DATA_PREFS = "UserData" // Matches LoginActivity
-        const val KEY_LOGGED_IN_USER = "logged_in_user" // Matches LoginActivity
-        // Base key for daily food logs (append date and meal type)
-        const val BASE_KEY_DAILY_FOOD = "daily_food"
-        // Base key for total daily calories (append date) - used by DiaryFragment
-        const val BASE_KEY_DAILY_CALORIES_EATEN = "daily_calories_eaten" // Matches DiaryFragment
-        // Keys for specific meals
+        const val USER_DATA_PREFS = "UserData"
+        const val KEY_LOGGED_IN_USER = "logged_in_user"
+        const val BASE_KEY_DAILY_FOOD = "daily_food" // Base for meal lists
+        const val BASE_KEY_DAILY_CALORIES_EATEN = "daily_calories_eaten" // Base for daily total
         const val MEAL_TYPE_BREAKFAST = "Breakfast"
         const val MEAL_TYPE_LUNCH = "Lunch"
         const val MEAL_TYPE_DINNER = "Dinner"
+        const val TAG = "FoodLogFragment" // For logging
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_food_log, container, false)
+        val view = inflater.inflate(R.layout.fragment_food_log, container, false)
+        initializeViews(view) // Initialize views right after inflating
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Initialize SharedPreferences and get logged-in user
         userDataPreferences = requireContext().getSharedPreferences(USER_DATA_PREFS, Context.MODE_PRIVATE)
         loggedInUsername = userDataPreferences.getString(KEY_LOGGED_IN_USER, null)
 
-        // Handle case where user is not logged in (optional, but good practice)
         if (loggedInUsername == null) {
             Toast.makeText(requireContext(), "Please log in to view food log.", Toast.LENGTH_SHORT).show()
-            // Optionally redirect to login or disable interaction
+            // Optionally disable UI or redirect
             return
         }
 
-        // Initialize views using the inflated view
-        initializeViews(view)
-
-        // Set current date
-        setCurrentDate()
-
-        // Load initial data (water, meals)
-        loadAndDisplayMealData(MEAL_TYPE_BREAKFAST)
-        loadAndDisplayMealData(MEAL_TYPE_LUNCH)
-        loadAndDisplayMealData(MEAL_TYPE_DINNER)
-
-        // Setup button listeners
         setupClickListeners()
+
+        // --- Observe the selectedDate LiveData from the ViewModel ---
+        dateViewModel.selectedDate.observe(viewLifecycleOwner, Observer { calendar ->
+            Log.d(TAG, "Observed date change: ${keyDateFormat.format(calendar.time)}")
+            // When the date changes, update the display and reload meal data
+            updateDateDisplay(calendar)
+            loadAllMealData(calendar)
+        })
+
+        // Initial load using the current value from ViewModel
+        // The observer will also trigger this once attached.
+        // val initialDate = dateViewModel.getCurrentSelectedDate()
+        // updateDateDisplay(initialDate)
+        // loadAllMealData(initialDate)
     }
 
-    // Helper to get the SharedPreferences key for a specific meal's data for the current day
-    private fun getDailyMealDataKey(username: String, mealType: String): String {
-        val todayDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-        // e.g., "john_daily_food_2025-04-28_Breakfast"
-        return "${username}_${BASE_KEY_DAILY_FOOD}_${todayDate}_$mealType"
-    }
-
-    // Helper to get the SharedPreferences key for total calories eaten today
-    private fun getDailyTotalCaloriesKey(username: String) : String {
-        val todayDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-        // e.g., "john_daily_calories_eaten_2025-04-28"
-        return "${username}_${BASE_KEY_DAILY_CALORIES_EATEN}_$todayDate"
-    }
-
+    // Removed onResume override for data loading, Observer handles updates.
 
     private fun initializeViews(view: View) {
         textViewDate = view.findViewById(R.id.textViewDate)
-
         buttonAddBreakfast = view.findViewById(R.id.buttonAddBreakfast)
         buttonAddLunch = view.findViewById(R.id.buttonAddLunch)
         buttonAddDinner = view.findViewById(R.id.buttonAddDinner)
-
         layoutBreakfastItems = view.findViewById(R.id.layoutBreakfastItems)
         layoutLunchItems = view.findViewById(R.id.layoutLunchItems)
         layoutDinnerItems = view.findViewById(R.id.layoutDinnerItems)
-
         textViewBreakfastTotalCalories = view.findViewById(R.id.textViewBreakfastTotalCalories)
         textViewLunchTotalCalories = view.findViewById(R.id.textViewLunchTotalCalories)
         textViewDinnerTotalCalories = view.findViewById(R.id.textViewDinnerTotalCalories)
     }
 
-    private fun setCurrentDate() {
-        val dateFormat = SimpleDateFormat("d MMMM, EEEE", Locale.getDefault())
-        textViewDate.text = dateFormat.format(Date())
+    // Updates the date display TextView
+    private fun updateDateDisplay(dateToDisplay: Calendar) {
+        // Add "Today", "Yesterday" logic if desired, similar to DiaryFragment
+        val today = Calendar.getInstance()
+        val yesterday = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, -1) }
+
+        val displayStr = when {
+            isSameDay(dateToDisplay, today) -> "Today"
+            isSameDay(dateToDisplay, yesterday) -> "Yesterday"
+            else -> displayDateFormat.format(dateToDisplay.time)
+        }
+        textViewDate.text = displayStr
+    }
+
+    // Helper to load data for all meals for the specified date
+    private fun loadAllMealData(dateToLoad: Calendar) {
+        Log.d(TAG, "Loading all meal data for: ${keyDateFormat.format(dateToLoad.time)}")
+        loadAndDisplayMealData(MEAL_TYPE_BREAKFAST, dateToLoad)
+        loadAndDisplayMealData(MEAL_TYPE_LUNCH, dateToLoad)
+        loadAndDisplayMealData(MEAL_TYPE_DINNER, dateToLoad)
     }
 
 
-    // Loads food entries for a specific meal and updates the UI
-    private fun loadAndDisplayMealData(mealType: String) {
-        if (loggedInUsername == null || !isAdded) return // Check fragment is attached
+    // --- Key Generation (Uses the passed-in date) ---
+    private fun getDailyMealDataKey(username: String, mealType: String, date: Calendar): String {
+        val dateKeyString = keyDateFormat.format(date.time)
+        return "${username}_${BASE_KEY_DAILY_FOOD}_${dateKeyString}_$mealType"
+    }
 
-        val mealDataKey = getDailyMealDataKey(loggedInUsername!!, mealType)
+    private fun getDailyTotalCaloriesKey(username: String, date: Calendar): String {
+        val dateKeyString = keyDateFormat.format(date.time)
+        return "${username}_${BASE_KEY_DAILY_CALORIES_EATEN}_$dateKeyString"
+    }
+
+    // --- Data Loading (Now accepts the date to load) ---
+    private fun loadAndDisplayMealData(mealType: String, dateToLoad: Calendar) {
+        if (loggedInUsername == null || !isAdded) return
+
+        val mealDataKey = getDailyMealDataKey(loggedInUsername!!, mealType, dateToLoad)
         val jsonString = userDataPreferences.getString(mealDataKey, null)
         val foodList: MutableList<FoodEntry> = if (jsonString != null) {
             try {
                 val type = object : TypeToken<MutableList<FoodEntry>>() {}.type
-                gson.fromJson(jsonString, type) ?: mutableListOf() // Handle null fromJson result
+                gson.fromJson(jsonString, type) ?: mutableListOf()
             } catch (e: Exception) {
-                // Handle potential JSON parsing errors
-                // Log.e("FoodLogFragment", "Error parsing JSON for $mealType", e)
+                Log.e(TAG, "Error parsing JSON for $mealType on ${keyDateFormat.format(dateToLoad.time)}", e)
                 mutableListOf()
             }
         } else {
@@ -155,68 +181,44 @@ class FoodLogFragment : Fragment() {
         val totalCaloriesTextView: TextView
 
         when (mealType) {
-            MEAL_TYPE_BREAKFAST -> {
-                itemsLayout = layoutBreakfastItems
-                totalCaloriesTextView = textViewBreakfastTotalCalories
-            }
-            MEAL_TYPE_LUNCH -> {
-                itemsLayout = layoutLunchItems
-                totalCaloriesTextView = textViewLunchTotalCalories
-            }
-            MEAL_TYPE_DINNER -> {
-                itemsLayout = layoutDinnerItems
-                totalCaloriesTextView = textViewDinnerTotalCalories
-            }
-            else -> return // Unknown meal type
+            MEAL_TYPE_BREAKFAST -> { itemsLayout = layoutBreakfastItems; totalCaloriesTextView = textViewBreakfastTotalCalories }
+            MEAL_TYPE_LUNCH -> { itemsLayout = layoutLunchItems; totalCaloriesTextView = textViewLunchTotalCalories }
+            MEAL_TYPE_DINNER -> { itemsLayout = layoutDinnerItems; totalCaloriesTextView = textViewDinnerTotalCalories }
+            else -> return
         }
 
-        // Clear previous items
-        itemsLayout.removeAllViews()
+        itemsLayout.removeAllViews() // Clear previous items
 
         var totalCalories = 0
-        val timeFormat = SimpleDateFormat("h:mm a", Locale.getDefault()) // Format for display time
-
-        // Sort by timestamp if needed (optional)
-        // foodList.sortBy { it.timestamp }
+        val timeFormat = SimpleDateFormat("h:mm a", Locale.getDefault())
 
         for (entry in foodList) {
             totalCalories += entry.calories
-
-            // Inflate the list item layout
-            val inflater = LayoutInflater.from(context) ?: return // Check context validity
+            val inflater = LayoutInflater.from(context) ?: return
             val itemView = inflater.inflate(R.layout.list_item_food, itemsLayout, false)
-
-            // Find views within the item layout
-            val textViewName = itemView.findViewById<TextView>(R.id.textViewFoodName)
-            val textViewCalories = itemView.findViewById<TextView>(R.id.textViewFoodCalories)
-            val textViewTime = itemView.findViewById<TextView>(R.id.textViewFoodTime)
-
-            // Set data
-            textViewName.text = entry.foodName
-            textViewCalories.text = "${entry.calories} kcal"
-            textViewTime.text = timeFormat.format(Date(entry.timestamp))
-
-            // Add the item view to the layout
+            // Find and set views in itemView (textViewName, textViewCalories, textViewTime)
+            itemView.findViewById<TextView>(R.id.textViewFoodName).text = entry.foodName
+            itemView.findViewById<TextView>(R.id.textViewFoodCalories).text = "${entry.calories} kcal"
+            itemView.findViewById<TextView>(R.id.textViewFoodTime).text = timeFormat.format(Date(entry.timestamp))
             itemsLayout.addView(itemView)
         }
 
-        // Update the total calories display for the meal
         totalCaloriesTextView.text = "$totalCalories kcal"
     }
 
-    // Saves a new food entry and updates the total daily calories
+    // --- Data Saving ---
     private fun saveFoodEntry(entry: FoodEntry) {
         if (loggedInUsername == null) return
+        val dateToSave = dateViewModel.getCurrentSelectedDate() // Get the date from ViewModel
 
-        val mealDataKey = getDailyMealDataKey(loggedInUsername!!, entry.mealType)
+        val mealDataKey = getDailyMealDataKey(loggedInUsername!!, entry.mealType, dateToSave)
         val jsonString = userDataPreferences.getString(mealDataKey, null)
         val foodList: MutableList<FoodEntry> = if (jsonString != null) {
             try {
                 val type = object : TypeToken<MutableList<FoodEntry>>() {}.type
-                gson.fromJson(jsonString, type) ?: mutableListOf() // Handle null fromJson result
+                gson.fromJson(jsonString, type) ?: mutableListOf()
             } catch (e: Exception) {
-                // Handle potential JSON parsing errors
-                // Log.e("FoodLogFragment", "Error parsing JSON for saving $mealType", e)
+                Log.e(TAG, "Error parsing JSON for saving ${entry.mealType} on ${keyDateFormat.format(dateToSave.time)}", e)
                 mutableListOf()
             }
         } else {
@@ -224,54 +226,46 @@ class FoodLogFragment : Fragment() {
         }
 
         foodList.add(entry)
+        foodList.sortBy { it.timestamp } // Optional: keep sorted by time added
 
-        // Save updated list back to SharedPreferences
         val editor = userDataPreferences.edit()
         val updatedJsonString = gson.toJson(foodList)
         editor.putString(mealDataKey, updatedJsonString)
 
-        // --- Update Total Daily Calories ---
-        val totalCaloriesKey = getDailyTotalCaloriesKey(loggedInUsername!!)
+        // --- Update Total Daily Calories for the correct date ---
+        val totalCaloriesKey = getDailyTotalCaloriesKey(loggedInUsername!!, dateToSave) // Use correct date
         val currentTotalCalories = userDataPreferences.getInt(totalCaloriesKey, 0)
         val newTotalCalories = currentTotalCalories + entry.calories
         editor.putInt(totalCaloriesKey, newTotalCalories)
-        // -----------------------------------
+        // ---------------------------------------------------------
 
-        editor.apply() // Apply changes
+        editor.apply()
 
-        // Refresh the display for the meal type that was updated
-        loadAndDisplayMealData(entry.mealType)
+        // Refresh the display for the meal type that was updated for the specific date
+        loadAndDisplayMealData(entry.mealType, dateToSave)
+        Log.d(TAG, "Saved ${entry.foodName} to ${entry.mealType} for ${keyDateFormat.format(dateToSave.time)}. New total: $newTotalCalories")
 
-        // Optional: Notify DiaryFragment to update its display immediately
-        // This requires communication between fragments. DiaryFragment currently updates in onResume.
+        // Optional: Could use a SharedFlow or similar in ViewModel to notify DiaryFragment immediately
     }
 
 
     private fun setupClickListeners() {
-
-        buttonAddBreakfast.setOnClickListener {
-            showAddMealDialog(MEAL_TYPE_BREAKFAST)
-        }
-
-        buttonAddLunch.setOnClickListener {
-            showAddMealDialog(MEAL_TYPE_LUNCH)
-        }
-
-        buttonAddDinner.setOnClickListener {
-            showAddMealDialog(MEAL_TYPE_DINNER)
-        }
+        buttonAddBreakfast.setOnClickListener { showAddMealDialog(MEAL_TYPE_BREAKFAST) }
+        buttonAddLunch.setOnClickListener { showAddMealDialog(MEAL_TYPE_LUNCH) }
+        buttonAddDinner.setOnClickListener { showAddMealDialog(MEAL_TYPE_DINNER) }
     }
 
     // Shows the dialog to add a food item
     private fun showAddMealDialog(mealType: String) {
-        if (!isAdded || context == null) return // Ensure fragment is attached and context is available
+        if (!isAdded || context == null) return
 
         val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_add_meal, null)
         val editTextFood = dialogView.findViewById<EditText>(R.id.edtFood)
         val editTextCalories = dialogView.findViewById<EditText>(R.id.edtCalories)
+        val dateToLog = dateViewModel.getCurrentSelectedDate() // Get date from ViewModel
 
         AlertDialog.Builder(requireContext())
-            .setTitle("Add $mealType")
+            .setTitle("Add $mealType for ${keyDateFormat.format(dateToLog.time)}") // Show date in title
             .setView(dialogView)
             .setPositiveButton("Add") { dialog, _ ->
                 val foodName = editTextFood.text.toString().trim()
@@ -279,40 +273,34 @@ class FoodLogFragment : Fragment() {
 
                 if (foodName.isEmpty()) {
                     Toast.makeText(context, "Please enter food name", Toast.LENGTH_SHORT).show()
-                    // Consider how to handle validation failure - maybe keep dialog open
-                    // For simplicity, we let it close here. Could re-show dialog or use a different approach.
+                    // Consider keeping dialog open on validation failure
                 } else {
                     val calories = caloriesStr.toIntOrNull()
                     if (calories == null || calories < 0) {
                         Toast.makeText(context, "Please enter valid calories (0 or more)", Toast.LENGTH_SHORT).show()
-                        // Handle validation failure
                     } else {
-                        // Validation passed, create and save the entry
                         val newEntry = FoodEntry(
                             foodName = foodName,
                             calories = calories,
-                            timestamp = System.currentTimeMillis(), // Current time
+                            timestamp = System.currentTimeMillis(), // Use current time for the entry timestamp itself
                             mealType = mealType
                         )
-                        saveFoodEntry(newEntry)
-                        dialog.dismiss() // Dismiss only on success
+                        saveFoodEntry(newEntry) // Save function uses ViewModel date for keys
+                        dialog.dismiss()
                     }
                 }
             }
-            .setNegativeButton("Cancel") { dialog, _ ->
-                dialog.cancel()
-            }
-            .setCancelable(false) // Prevent closing dialog on outside touch before explicit action
+            .setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
+            .setCancelable(false)
             .show()
     }
 
-
-    // Method to refresh data from outside (if needed, e.g., after water log)
-    fun refreshData() {
-        if (isAdded && loggedInUsername != null) {
-            loadAndDisplayMealData(MEAL_TYPE_BREAKFAST)
-            loadAndDisplayMealData(MEAL_TYPE_LUNCH)
-            loadAndDisplayMealData(MEAL_TYPE_DINNER)
-        }
+    // Helper to check if two Calendar instances represent the same day
+    private fun isSameDay(cal1: Calendar?, cal2: Calendar?): Boolean {
+        if (cal1 == null || cal2 == null) return false
+        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+                cal1.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH) &&
+                cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH)
     }
+
 }

@@ -92,6 +92,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@drawable/add"
+                        android:background="@color/white"
                         android:contentDescription="Add Breakfast"
                         android:scaleType="fitCenter"
                         android:padding="4dp"/>
@@ -142,6 +143,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@drawable/add"
+                        android:background="@color/white"
                         android:contentDescription="Add Lunch"
                         android:scaleType="fitCenter"
                         android:padding="4dp"/>
@@ -191,6 +193,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@drawable/add"
+                        android:background="@color/white"
                         android:contentDescription="Add Dinner"
                         android:scaleType="fitCenter"
                         android:padding="4dp"/>

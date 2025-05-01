@@ -1,6 +1,7 @@
 package com.example.chowcheck.frag // Ensure this is your correct package
 
 import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -9,62 +10,74 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.TextView
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController // Use this if you use Navigation Component
-import com.example.chowcheck.LoginActivity // For potential redirects
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.example.chowcheck.R
+import com.example.chowcheck.viewmodel.DateViewModel
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 import java.util.concurrent.TimeUnit
+
 
 class DiaryFragment : Fragment() {
 
-    // --- UI Elements (match the XML provided previously) ---
+    // --- UI Elements ---
     private lateinit var dateTextView: TextView
-    // Calorie Card Views
+    private lateinit var calendarIconImageView: ImageView
     private lateinit var caloriesProgressBar: ProgressBar
     private lateinit var eatenValueTextView: TextView
     private lateinit var goalValueTextView: TextView
     private lateinit var leftValueTextView: TextView
-    // Action Button
     private lateinit var logFoodButton: Button
-    // Weight Card Views
     private lateinit var lastWeightTextView: TextView
     private lateinit var logWeightButton: Button
     private lateinit var weeklyWeightPromptTextView: TextView
-    // Notes Card Views
     private lateinit var notesEditText: EditText
     private lateinit var saveNotesButton: Button
-    // Add other views like water tracker if you included them in the XML
 
     // --- Data & SharedPreferences ---
     private lateinit var userDataPreferences: SharedPreferences
     private var loggedInUsername: String? = null
     private val gson = Gson()
-    private val todayDateString: String =
-        SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-    private val displayDateFormat = SimpleDateFormat("EEEE, MMMM d, yyyy", Locale.getDefault()) // Adjusted format
 
-    // --- Keys and Constants (using conventions from your project) ---
+    // --- Date Management ---
+    // Get the Shared ViewModel instance, scoped to the LandingActivity
+    private val dateViewModel: DateViewModel by activityViewModels()
+
+    // Format for displaying the date to the user
+    // *** CORRECTED PATTERN HERE ***
+    private val displayDateFormat = SimpleDateFormat("EEEE, MMMM d, yyyy", Locale.getDefault())
+    // Format for keys (consistent with ViewModel)
+    private val keyDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+
+
+    // --- Keys and Constants ---
     companion object {
-        // Use constants defined elsewhere if possible, otherwise define consistently
         const val USER_DATA_PREFS = "UserData"
         const val KEY_LOGGED_IN_USER = "logged_in_user"
         const val BASE_KEY_CALORIE_GOAL = "calorie_goal"
         const val BASE_KEY_WEIGHT = "weight"
-        const val BASE_KEY_WEIGHT_GOAL = "weight_goal" // Used for context, not directly displayed here
-        const val BASE_KEY_STARTING_WEIGHT = "starting_weight" // Used for context, not directly displayed here
+        const val BASE_KEY_WEIGHT_GOAL = "weight_goal"
+        const val BASE_KEY_STARTING_WEIGHT = "starting_weight"
         const val BASE_KEY_DAILY_CALORIES_EATEN = "daily_calories_eaten"
-        const val BASE_KEY_WEIGHT_HISTORY = "weight_history" // Key for the list of weights
-        const val BASE_KEY_DAILY_NOTES = "daily_notes" // New key for notes
+        const val BASE_KEY_WEIGHT_HISTORY = "weight_history"
+        const val BASE_KEY_DAILY_NOTES = "daily_notes"
         const val TAG = "DiaryFragment"
 
-        // Data class for weight entries (matches ResultsTabFragment)
-        // Ideally, place this in a shared file if used by multiple fragments
         data class WeightEntry(
             val timestamp: Long,
             val weight: Double
@@ -75,9 +88,9 @@ class DiaryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // *** IMPORTANT: Inflate the NEW XML layout (the one with input features) ***
+        // Inflate layout *before* accessing views
         val view = inflater.inflate(R.layout.fragment_diary, container, false)
-        initializeViews(view) // Initialize views from the NEW layout
+        initializeViews(view) // Initialize views immediately after inflation
         return view
     }
 
@@ -92,51 +105,53 @@ class DiaryFragment : Fragment() {
 
         if (loggedInUsername == null) {
             handleNotLoggedIn()
-            return // Stop further setup
+            return
         }
 
         setupListeners()
-        loadAndDisplayData() // Initial load
+
+        // --- Observe the selectedDate LiveData from the ViewModel ---
+        dateViewModel.selectedDate.observe(viewLifecycleOwner, Observer { calendar ->
+            Log.d(TAG, "Observed date change: ${keyDateFormat.format(calendar.time)}")
+            // When the date changes in the ViewModel, reload the data for this fragment
+            loadAndDisplayData(calendar) // Pass the new date to the loading function
+        })
+
+        // Initial load using the current value from ViewModel (if already set)
+        // The observer will also trigger this once it's attached
+        // loadAndDisplayData(dateViewModel.getCurrentSelectedDate()) // Load initial data
     }
 
-    // Refresh data when the fragment becomes visible again
-    override fun onResume() {
-        super.onResume()
-        if (isAdded && loggedInUsername != null) {
-            // Reload data in case food was added or settings changed elsewhere
-            loadAndDisplayData()
-        }
-    }
+    // Removed onResume override for data loading, as the Observer handles updates now.
 
     private fun initializeViews(view: View) {
-        // --- Find views from the NEW XML layout ---
+        // Find views using the passed-in view object
         dateTextView = view.findViewById(R.id.dateTextView)
-        // Calorie Card
+        calendarIconImageView = view.findViewById(R.id.calendarIconImageView)
         caloriesProgressBar = view.findViewById(R.id.caloriesProgressBar)
         eatenValueTextView = view.findViewById(R.id.eatenValueTextView)
         goalValueTextView = view.findViewById(R.id.goalValueTextView)
         leftValueTextView = view.findViewById(R.id.leftValueTextView)
-        // Action Button
         logFoodButton = view.findViewById(R.id.logFoodButton)
-        // Weight Card
         lastWeightTextView = view.findViewById(R.id.lastWeightTextView)
         logWeightButton = view.findViewById(R.id.logWeightButton)
         weeklyWeightPromptTextView = view.findViewById(R.id.weeklyWeightPromptTextView)
-        // Notes Card
         notesEditText = view.findViewById(R.id.notesEditText)
         saveNotesButton = view.findViewById(R.id.saveNotesButton)
-        // Initialize water tracker views if added
     }
 
+
     private fun setupListeners() {
-        logFoodButton.setOnClickListener { // Assuming logFoodButton is the ID in your interactive Diary layout
-            // Navigate to FoodLogFragment using Navigation Component
+        calendarIconImageView.setOnClickListener {
+            showDatePickerDialog()
+        }
+
+        logFoodButton.setOnClickListener {
+            // No need to pass date argument anymore, FoodLogFragment will get it from ViewModel
             try {
-                // *** Replace with YOUR action ID from nav_graph.xml ***
-                // This action must go FROM DiaryFragment TO FoodLogFragment
                 findNavController().navigate(R.id.action_diaryFragment_to_foodLogFragment)
             } catch (e: Exception) {
-                android.util.Log.e("DiaryFragment", "Navigation to FoodLog failed: ${e.message}. Check Nav Graph Action ID.")
+                Log.e(TAG, "Navigation to FoodLog failed: ${e.message}.")
                 Toast.makeText(context, "Error navigating to Food Log.", Toast.LENGTH_SHORT).show()
             }
         }
@@ -148,176 +163,203 @@ class DiaryFragment : Fragment() {
         saveNotesButton.setOnClickListener {
             saveDailyNotes()
         }
-        // ... other listeners ...
     }
 
-    private fun loadAndDisplayData() {
+    // --- Date Picker ---
+    private fun showDatePickerDialog() {
+        val currentSelectedDate = dateViewModel.getCurrentSelectedDate() // Get current date from VM
+        val year = currentSelectedDate.get(Calendar.YEAR)
+        val month = currentSelectedDate.get(Calendar.MONTH)
+        val day = currentSelectedDate.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(requireContext(),
+            { _, selectedYear, selectedMonth, selectedDay ->
+                // Update the date in the SHARED VIEWMODEL
+                dateViewModel.updateSelectedDate(selectedYear, selectedMonth, selectedDay)
+                // The observer will automatically call loadAndDisplayData
+            }, year, month, day)
+        datePickerDialog.show()
+    }
+
+    // --- Data Loading (Now accepts the date to load) ---
+    private fun loadAndDisplayData(dateToLoad: Calendar) {
         if (loggedInUsername == null || !isAdded) return
 
-        // Display Date
-        dateTextView.text = displayDateFormat.format(Date())
-
-        // Load and Display Calories
-        loadCalorieData()
-
-        // Load and Display Weight Info & Check Prompt
-        loadWeightData()
-
-        // Load and Display Notes
-        loadDailyNotes()
-
-        // Load water data if implemented
+        Log.d(TAG, "Loading data for date: ${keyDateFormat.format(dateToLoad.time)}")
+        updateDateDisplay(dateToLoad) // Show the selected date
+        loadCalorieData(dateToLoad)   // Load calories for the selected date
+        loadWeightData()              // Load weight history (shows last logged, independent of selected date)
+        loadDailyNotes(dateToLoad)    // Load notes for the selected date
     }
 
-    // --- Data Loading Functions ---
+    // Updates the TextView showing the selected date
+    private fun updateDateDisplay(dateToDisplay: Calendar) {
+        val today = Calendar.getInstance()
+        val yesterday = Calendar.getInstance().apply { add(Calendar.DAY_OF_YEAR, -1) }
 
-    private fun loadCalorieData() {
-        val calorieGoalKey = getUserDataKey(BASE_KEY_CALORIE_GOAL)
-        val caloriesGoal = userDataPreferences.getInt(calorieGoalKey, 2000) // Default
+        val displayStr = when {
+            isSameDay(dateToDisplay, today) -> "Today"
+            isSameDay(dateToDisplay, yesterday) -> "Yesterday"
+            else -> displayDateFormat.format(dateToDisplay.time)
+        }
+        dateTextView.text = displayStr
+    }
 
-        val caloriesEatenKey = getDailyUserDataKey(BASE_KEY_DAILY_CALORIES_EATEN) ?: return
+    // Loads calorie data for the given date
+    private fun loadCalorieData(dateToLoad: Calendar) {
+        val calorieGoalKey = getUserDataKey(BASE_KEY_CALORIE_GOAL) // Goal is not date specific
+        val caloriesGoal = userDataPreferences.getInt(calorieGoalKey, 2000)
+
+        // Use the specific date for the eaten key
+        val dateKeyString = keyDateFormat.format(dateToLoad.time)
+        val caloriesEatenKey = loggedInUsername?.let { "${it}_${BASE_KEY_DAILY_CALORIES_EATEN}_$dateKeyString" } ?: return
         val caloriesEaten = userDataPreferences.getInt(caloriesEatenKey, 0)
 
         val caloriesLeft = (caloriesGoal - caloriesEaten).coerceAtLeast(0)
-        // Ensure progress calculation is safe and within bounds
-        val progress = if (caloriesGoal > 0) {
-            (caloriesEaten.toFloat() / caloriesGoal * 100).toInt().coerceIn(0, 100)
-        } else {
-            0 // Or 100 if goal is 0 and eaten > 0, depending on desired behavior
-        }
+        val progress = if (caloriesGoal > 0) (caloriesEaten * 100f / caloriesGoal).toInt().coerceIn(0, 100) else 0
 
-
-        goalValueTextView.text = "$caloriesGoal" // Display only the number
-        eatenValueTextView.text = "$caloriesEaten" // Display only the number
-        leftValueTextView.text = "$caloriesLeft" // Display only the number
+        goalValueTextView.text = "$caloriesGoal"
+        eatenValueTextView.text = "$caloriesEaten"
+        leftValueTextView.text = "$caloriesLeft"
         caloriesProgressBar.progress = progress
     }
 
+    // Weight history display remains the same (shows last logged overall)
     private fun loadWeightData() {
-        val weightHistory = loadWeightHistory() // Use the function to load the list
-        val lastEntry = weightHistory.maxByOrNull { it.timestamp } // Get the most recent entry
+        val weightHistory = loadWeightHistory()
+        val lastEntry = weightHistory.maxByOrNull { it.timestamp }
 
         if (lastEntry != null) {
             val lastWeightFormatted = String.format("%.1f", lastEntry.weight)
             val lastDate = Date(lastEntry.timestamp)
-            // Format date like "Apr 28"
             val lastDateFormatted = SimpleDateFormat("MMM d", Locale.getDefault()).format(lastDate)
             lastWeightTextView.text = "Last: $lastWeightFormatted kg on $lastDateFormatted"
 
-            // Check for weekly prompt based on the last entry's timestamp
             val daysSinceLastLog = TimeUnit.MILLISECONDS.toDays(System.currentTimeMillis() - lastEntry.timestamp)
             weeklyWeightPromptTextView.isVisible = daysSinceLastLog >= 7
-
         } else {
-            // Handle case where there's no weight history yet
             lastWeightTextView.text = "Log your weight to get started!"
-            weeklyWeightPromptTextView.isVisible = true // Prompt if no history
+            weeklyWeightPromptTextView.isVisible = true
         }
     }
 
-    private fun loadDailyNotes() {
-        val notesKey = getDailyUserDataKey(BASE_KEY_DAILY_NOTES) ?: return
-        val savedNote = userDataPreferences.getString(notesKey, "") // Default to empty string
-        notesEditText.setText(savedNote)
+    // Loads notes for the given date
+    private fun loadDailyNotes(dateToLoad: Calendar) {
+        val dateKeyString = keyDateFormat.format(dateToLoad.time)
+        val notesKey = loggedInUsername?.let { "${it}_${BASE_KEY_DAILY_NOTES}_$dateKeyString" } ?: return
+        val savedNote = userDataPreferences.getString(notesKey, "")
+        // Avoid setting text if it's already the same to prevent cursor jumps
+        if (notesEditText.text.toString() != savedNote) {
+            notesEditText.setText(savedNote)
+        }
     }
 
-    // --- Data Saving Functions ---
+    // --- Data Saving ---
 
     private fun showLogWeightDialog() {
-        // Ensure context is available
         if (!isAdded || context == null) return
+        val dateToLog = dateViewModel.getCurrentSelectedDate() // Get date from ViewModel
 
         val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Log Today's Weight (kg)")
+        builder.setTitle("Log Weight for ${keyDateFormat.format(dateToLog.time)} (kg)") // Use formatted date
 
-        // Set up the input field
-        val input = EditText(requireContext())
-        input.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
-        input.setHint("Enter weight in kg")
+        // Create EditText programmatically
+        val input = EditText(requireContext()).apply {
+            inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
+            hint = "Enter weight in kg"
+        }
+        // Create a container for padding
+        val container = FrameLayout(requireContext()).apply {
+            val paddingDp = 16
+            val paddingPx = (paddingDp * resources.displayMetrics.density).toInt()
+            setPadding(paddingPx, paddingPx / 2, paddingPx, paddingPx / 2) // Add some padding
+            addView(input)
+        }
+        builder.setView(container) // Set the container with the EditText
 
-        // Add padding to the EditText within the dialog
-        val container = FrameLayout(requireContext())
-        val params = FrameLayout.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        // Add margins (requires dimens.xml or use hardcoded dp)
-        val margin = (16 * resources.displayMetrics.density).toInt() // Example: 16dp margin
-        params.leftMargin = margin
-        params.rightMargin = margin
-        input.layoutParams = params
-        container.addView(input)
-        builder.setView(container)
-
-        // Set up the dialog buttons
         builder.setPositiveButton("Save") { dialog, _ ->
             val weightString = input.text.toString()
             val weight = weightString.toDoubleOrNull()
-
             if (weight != null && weight > 0) {
-                saveWeightEntry(weight) // Call the function to save the weight
+                saveWeightEntry(weight, dateToLog) // Pass the specific date
                 dialog.dismiss()
             } else {
                 Toast.makeText(context, "Please enter a valid positive weight.", Toast.LENGTH_SHORT).show()
-                // Don't dismiss, let the user correct the input
             }
         }
         builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
-
         builder.show()
     }
 
-    private fun saveWeightEntry(weight: Double) {
-        if (loggedInUsername == null) return // Should not happen if checked earlier, but safe check
+    // saveWeightEntry remains mostly the same as the previous version, accepting the date
+    private fun saveWeightEntry(weight: Double, dateToLog: Calendar) {
+        if (loggedInUsername == null) return
 
-        val currentTimestamp = System.currentTimeMillis()
-        val newEntry = WeightEntry(timestamp = currentTimestamp, weight = weight)
+        val entryCalendar = Calendar.getInstance().apply {
+            timeInMillis = dateToLog.timeInMillis
+            set(Calendar.HOUR_OF_DAY, 12) // Noon
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+        val entryTimestamp = entryCalendar.timeInMillis
 
-        // --- 1. Update the simple 'current weight' key ---
-        // This key is used by ProfileFragment, CalorieInfoActivity etc.
-        val currentWeightKey = getUserDataKey(BASE_KEY_WEIGHT) ?: return
-        userDataPreferences.edit().putString(currentWeightKey, weight.toString()).apply() // Apply immediately
+        Log.d(TAG, "Saving weight $weight for timestamp: $entryTimestamp (${Date(entryTimestamp)})")
+        val newEntry = WeightEntry(timestamp = entryTimestamp, weight = weight)
 
-        // --- 2. Add entry to the Weight History list ---
-        val history = loadWeightHistory().toMutableList() // Load existing history
-        history.add(newEntry) // Add the new entry
-        // Optional: Sort history if needed, although appending usually maintains order
-        // history.sortBy { it.timestamp }
+        val history = loadWeightHistory().toMutableList()
+        val existingEntryIndex = history.indexOfFirst { isSameDay(Calendar.getInstance().apply { timeInMillis = it.timestamp }, entryCalendar) }
 
-        // --- 3. Save the updated history list back to SharedPreferences ---
+        if (existingEntryIndex != -1) {
+            history[existingEntryIndex] = newEntry
+            Log.d(TAG, "Updated existing weight entry for ${keyDateFormat.format(entryCalendar.time)}")
+        } else {
+            history.add(newEntry)
+            Log.d(TAG, "Added new weight entry for ${keyDateFormat.format(entryCalendar.time)}")
+        }
+        history.sortBy { it.timestamp } // Sort after modification
+
         val weightHistoryKey = getUserDataKey(BASE_KEY_WEIGHT_HISTORY) ?: return
         try {
-            val json = gson.toJson(history) // Convert updated list to JSON
-            userDataPreferences.edit().putString(weightHistoryKey, json).apply() // Save JSON string
+            val json = gson.toJson(history)
+            val editor = userDataPreferences.edit()
+            editor.putString(weightHistoryKey, json)
+
+            // Update current weight ONLY if this is the latest entry
+            val latestTimestamp = history.maxByOrNull { it.timestamp }?.timestamp ?: -1L
+            if (entryTimestamp >= latestTimestamp) {
+                val currentWeightKey = getUserDataKey(BASE_KEY_WEIGHT)
+                if (currentWeightKey != null) {
+                    editor.putString(currentWeightKey, weight.toString())
+                    Log.d(TAG, "Updated current weight key.")
+                }
+            }
+            editor.apply() // Apply all changes
+
         } catch (e: Exception) {
             Log.e(TAG, "Error saving weight history JSON: ${e.message}")
             Toast.makeText(context, "Error saving weight history.", Toast.LENGTH_SHORT).show()
-            // Decide if you want to revert the current weight save if history fails
-            return // Stop if history saving fails
+            return
         }
 
-
-        // --- 4. Update the UI immediately ---
-        val lastWeightFormatted = String.format("%.1f", newEntry.weight)
-        val lastDateFormatted = SimpleDateFormat("MMM d", Locale.getDefault()).format(Date(newEntry.timestamp))
-        lastWeightTextView.text = "Last: $lastWeightFormatted kg on $lastDateFormatted"
-        weeklyWeightPromptTextView.isVisible = false // Hide prompt after successful logging
-        Toast.makeText(context, "Weight saved!", Toast.LENGTH_SHORT).show()
-
-        // Consider notifying ResultsTabFragment if it needs real-time updates (more complex)
+        loadWeightData() // Refresh the weight display section
+        Toast.makeText(context, "Weight saved for ${keyDateFormat.format(dateToLog.time)}!", Toast.LENGTH_SHORT).show()
     }
+
 
     private fun saveDailyNotes() {
         if (loggedInUsername == null || !isAdded) return
+        val dateToSave = dateViewModel.getCurrentSelectedDate() // Get date from ViewModel
 
-        val notesKey = getDailyUserDataKey(BASE_KEY_DAILY_NOTES) ?: return
-        val notesText = notesEditText.text.toString() // Get text, no trim needed usually for notes
+        val dateKeyString = keyDateFormat.format(dateToSave.time)
+        val notesKey = loggedInUsername?.let { "${it}_${BASE_KEY_DAILY_NOTES}_$dateKeyString" } ?: return
+        val notesText = notesEditText.text.toString()
 
         try {
             userDataPreferences.edit().putString(notesKey, notesText).apply()
-            Toast.makeText(context, "Notes saved!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Notes saved for ${keyDateFormat.format(dateToSave.time)}!", Toast.LENGTH_SHORT).show()
 
-            // Optionally clear focus and hide keyboard
+            // Hide keyboard
             notesEditText.clearFocus()
             val inputMethodManager = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as? android.view.inputmethod.InputMethodManager
             inputMethodManager?.hideSoftInputFromWindow(view?.windowToken, 0)
@@ -330,18 +372,20 @@ class DiaryFragment : Fragment() {
 
     // --- Helper Functions ---
 
-    // Gets key specific to user (e.g., "john_weight")
+    // Gets key specific to user (e.g., "john_weight_goal") - Not date specific
     private fun getUserDataKey(baseKey: String): String? {
         return loggedInUsername?.let { "${it}_${baseKey}" }
     }
 
-    // Gets key specific to user AND today's date (e.g., "john_daily_calories_eaten_2025-05-01")
-    private fun getDailyUserDataKey(baseKey: String): String? {
-        // Ensures todayDateString is current when key is needed
-        val todayDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-        return loggedInUsername?.let { "${it}_${baseKey}_$todayDate" }
+    // Helper to check if two Calendar instances represent the same day
+    private fun isSameDay(cal1: Calendar?, cal2: Calendar?): Boolean {
+        if (cal1 == null || cal2 == null) return false
+        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+                cal1.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH) &&
+                cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH)
     }
 
+    // *** CORRECTED loadWeightHistory function ***
     // Loads the list of WeightEntry objects from SharedPreferences
     private fun loadWeightHistory(): List<WeightEntry> {
         if (loggedInUsername == null) return emptyList()
@@ -359,33 +403,26 @@ class DiaryFragment : Fragment() {
             }
         } catch (e: Exception) {
             Log.e(TAG, "Error parsing weight history JSON: ${e.message}")
-            Toast.makeText(context, "Error loading weight history.", Toast.LENGTH_SHORT).show()
+            // Show toast only if fragment is added to avoid crashes
+            if (isAdded) {
+                Toast.makeText(context, "Error loading weight history.", Toast.LENGTH_SHORT).show()
+            }
             emptyList() // Return empty list on error
         }
     }
 
-    private fun handleNotLoggedIn() {
-        // Show logged-out state in UI or redirect
-        Toast.makeText(requireContext(), "Please log in.", Toast.LENGTH_LONG).show()
-        // Example: Redirect to Login
-        // val intent = Intent(requireActivity(), LoginActivity::class.java)
-        // intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        // startActivity(intent)
-        // requireActivity().finish()
 
-        // Or just disable UI elements
+    private fun handleNotLoggedIn() {
+        // ... (same as before) ...
+        if (!isAdded) return
+        Toast.makeText(requireContext(), "Please log in.", Toast.LENGTH_LONG).show()
+        // Disable UI elements
         logFoodButton.isEnabled = false
         logWeightButton.isEnabled = false
         saveNotesButton.isEnabled = false
         notesEditText.isEnabled = false
-        // Display placeholder text
-        dateTextView.text = displayDateFormat.format(Date())
-        goalValueTextView.text = "N/A"
-        eatenValueTextView.text = "N/A"
-        leftValueTextView.text = "N/A"
-        caloriesProgressBar.progress = 0
-        lastWeightTextView.text = "Log in to track weight"
-        weeklyWeightPromptTextView.isVisible = false
-        notesEditText.setText("")
+        calendarIconImageView.isEnabled = false
+        dateTextView.text = displayDateFormat.format(Date()) // Show today's date
+        // ... clear other fields ...
     }
 }

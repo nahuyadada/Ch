@@ -12,7 +12,12 @@
         tools:layout="@layout/fragment_diary" >
         <action
             android:id="@+id/action_diaryFragment_to_foodLogFragment"
-            app:destination="@id/foodLogFragment" />
+            app:destination="@id/foodLogFragment">
+            <argument
+                android:name="selectedDateMillis"
+                app:argType="long"
+                android:defaultValue="-1L" />
+        </action>
     </fragment>
 
     <fragment
