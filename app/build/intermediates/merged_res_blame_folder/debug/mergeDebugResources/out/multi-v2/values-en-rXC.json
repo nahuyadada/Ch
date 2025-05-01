@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.chowcheck.app-mergeDebugResources-57:/values-en-rXC/values-en-rXC.xml",
+            "outputFile": "com.example.chowcheck.app-mergeDebugResources-68:/values-en-rXC/values-en-rXC.xml",
             "map": [
                 {
                     "source": "C:\\Users\\andre\\.gradle\\caches\\transforms-3\\66f984d43affe19bd03317212e346daa\\transformed\\material3-1.1.1\\res\\values-en-rXC\\values-en-rXC.xml",

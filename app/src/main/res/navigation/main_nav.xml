@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/diaryFragment"> <fragment
+    android:id="@+id/diaryFragment"
+    android:name="com.example.chowcheck.frag.DiaryFragment"
+    android:label="fragment_diary"
+    tools:layout="@layout/fragment_diary" >
+    <action
+        android:id="@+id/action_diaryFragment_to_foodLogFragment"
+        app:destination="@id/foodLogFragment" />
+</fragment>
+
+    <fragment
+        android:id="@+id/foodLogFragment"
+        android:name="com.example.chowcheck.frag.FoodLogFragment"
+        android:label="fragment_food_log"
+        tools:layout="@layout/fragment_food_log" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/resultsTabFragment"
+        android:name="com.example.chowcheck.frag.ResultsTabFragment"
+        android:label="fragment_results_tab"
+        tools:layout="@layout/fragment_results_tab" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.chowcheck.frag.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+
+</navigation>

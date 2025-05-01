@@ -74,6 +74,13 @@
             android:name="androidx.activity.ComponentActivity"
             android:exported="true" />
 
+        <uses-library
+            android:name="androidx.window.extensions"
+            android:required="false" />
+        <uses-library
+            android:name="androidx.window.sidecar"
+            android:required="false" />
+
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="com.example.chowcheck.androidx-startup"

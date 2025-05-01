@@ -1,4 +1,4 @@
-plugins {
+    plugins {
     alias(libs.plugins.androidApplication)
     id("org.jetbrains.kotlin.android")
 }
@@ -64,6 +64,8 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.cardview)
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.7") // Or latest stable version
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.7")     // Or latest stable version
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.activity:activity:1.8.0")
