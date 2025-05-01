@@ -3658,10 +3658,8 @@ int id pooling_container_listener_holder_tag 0x7f0901ca
 int id position 0x7f0901cb
 int id postLayout 0x7f0901cc
 int id pressed 0x7f0901cd
-int id profileDiary 0x7f0901ce
 int id profileFragment 0x7f0901cf
 int id profilePicture 0x7f0901d0
-int id profileVisibility 0x7f0901d1
 int id progress_circular 0x7f0901d2
 int id progress_horizontal 0x7f0901d3
 int id radio 0x7f0901d4
@@ -3725,9 +3723,7 @@ int id south 0x7f09020d
 int id spacer 0x7f09020e
 int id special_effects_controller_view_tag 0x7f09020f
 int id spinnerActivityLevel 0x7f090210
-int id spinnerProfile 0x7f090211
 int id spinnerSex 0x7f090212
-int id spinnerVisibilty 0x7f090213
 int id spinnerWeeklyChange 0x7f090214
 int id spline 0x7f090215
 int id split_action_bar 0x7f090216
@@ -3756,7 +3752,6 @@ int id submenuarrow 0x7f09022c
 int id submit_area 0x7f09022d
 int id supportScrollUp 0x7f09022e
 int id switch2FA 0x7f09022f
-int id switchDataCollect 0x7f090230
 int id switchGoalReminder 0x7f090231
 int id switchMealReminder 0x7f090232
 int id switchProgressReminder 0x7f090233
@@ -3781,8 +3776,6 @@ int id text 0x7f090245
 int id text2 0x7f090246
 int id text2FA 0x7f090247
 int id textChangePass 0x7f090248
-int id textDataCollect 0x7f090249
-int id textDiary 0x7f09024a
 int id textEnd 0x7f09024b
 int id textLinkedAcc 0x7f09024c
 int id textSpacerNoButtons 0x7f09024d
@@ -3802,7 +3795,6 @@ int id textViewLoginLink 0x7f09025a
 int id textViewLunchLabel 0x7f09025b
 int id textViewLunchTotalCalories 0x7f09025c
 int id textViewTitle 0x7f09025d
-int id textVisibility 0x7f09025e
 int id text_input_end_icon 0x7f09025f
 int id text_input_error_icon 0x7f090260
 int id text_input_start_icon 0x7f090261
@@ -3988,7 +3980,6 @@ int layout activity_health_profile 0x7f0c0020
 int layout activity_landing 0x7f0c0021
 int layout activity_login 0x7f0c0022
 int layout activity_notification 0x7f0c0023
-int layout activity_privacy 0x7f0c0024
 int layout activity_register 0x7f0c0025
 int layout activity_security 0x7f0c0026
 int layout activity_settings 0x7f0c0027
