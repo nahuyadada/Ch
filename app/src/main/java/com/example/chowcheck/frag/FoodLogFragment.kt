@@ -30,7 +30,6 @@ class FoodLogFragment : Fragment() {
     private lateinit var buttonAddBreakfast: ImageButton
     private lateinit var buttonAddLunch: ImageButton
     private lateinit var buttonAddDinner: ImageButton
-    private lateinit var textViewWaterDetails: TextView
     // Layouts to hold logged items
     private lateinit var layoutBreakfastItems: LinearLayout
     private lateinit var layoutLunchItems: LinearLayout
@@ -88,7 +87,6 @@ class FoodLogFragment : Fragment() {
         setCurrentDate()
 
         // Load initial data (water, meals)
-        loadAndDisplayWaterData() // Renamed for clarity
         loadAndDisplayMealData(MEAL_TYPE_BREAKFAST)
         loadAndDisplayMealData(MEAL_TYPE_LUNCH)
         loadAndDisplayMealData(MEAL_TYPE_DINNER)
@@ -133,18 +131,6 @@ class FoodLogFragment : Fragment() {
         textViewDate.text = dateFormat.format(Date())
     }
 
-    private fun loadAndDisplayWaterData() {
-        // --- Placeholder Data Loading (Replace with your actual logic if needed) ---
-        val waterIntakeLiters = 0.9 // Replace with actual loaded value
-        val waterGoalLiters = 1.5 // Replace with actual loaded value
-
-        val waterProgressPercent = if (waterGoalLiters > 0) {
-            (waterIntakeLiters / waterGoalLiters * 100).toInt().coerceIn(0, 100)
-        } else {
-            0
-        }
-        textViewWaterDetails.text = "Water %.1fL (%d%%)".format(waterIntakeLiters, waterProgressPercent)
-    }
 
     // Loads food entries for a specific meal and updates the UI
     private fun loadAndDisplayMealData(mealType: String) {
@@ -324,7 +310,6 @@ class FoodLogFragment : Fragment() {
     // Method to refresh data from outside (if needed, e.g., after water log)
     fun refreshData() {
         if (isAdded && loggedInUsername != null) {
-            loadAndDisplayWaterData()
             loadAndDisplayMealData(MEAL_TYPE_BREAKFAST)
             loadAndDisplayMealData(MEAL_TYPE_LUNCH)
             loadAndDisplayMealData(MEAL_TYPE_DINNER)

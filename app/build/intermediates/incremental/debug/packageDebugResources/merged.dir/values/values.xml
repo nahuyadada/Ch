@@ -39,8 +39,8 @@
         <item name="cornerSize">50%</item>
     </style>
     <style name="Theme.ChowCheck" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimary">@color/nav_item_selected_dark_green</item>
+        <item name="colorPrimaryVariant">@color/nav_item_selected_dark_green</item>
         <item name="colorOnPrimary">@color/white</item>
     </style>
 </resources>

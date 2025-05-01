@@ -20,13 +20,6 @@
             android:background="@color/nav_item_selected_dark_green"   app:title="Edit Profile"
             app:titleTextColor="?attr/colorOnPrimary" /> </com.google.android.material.appbar.AppBarLayout>
 
-    <ImageView
-        android:id="@+id/btnBack"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/back"
-        android:contentDescription="Back Button" />
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

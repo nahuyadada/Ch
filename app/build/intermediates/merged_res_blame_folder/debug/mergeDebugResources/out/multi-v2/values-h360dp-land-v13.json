@@ -4,7 +4,7 @@
             "outputFile": "com.example.chowcheck.app-mergeDebugResources-68:/values-h360dp-land-v13/values-h360dp-land-v13.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\andre\\.gradle\\caches\\transforms-3\\fa4206635fe06c31f4ebcbd5a155e03b\\transformed\\material-1.12.0\\res\\values-h360dp-land-v13\\values-h360dp-land-v13.xml",
+                    "source": "C:\\Users\\Miggy\\.gradle\\caches\\transforms-3\\fa4206635fe06c31f4ebcbd5a155e03b\\transformed\\material-1.12.0\\res\\values-h360dp-land-v13\\values-h360dp-land-v13.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10",
                         "startColumns": "4,4,4,4,4,4,4,4,4",
