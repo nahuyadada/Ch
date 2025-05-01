@@ -64,6 +64,7 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.cardview)
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7") // Or latest stable version
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")     // Or latest stable version
     implementation("androidx.appcompat:appcompat:1.7.0")

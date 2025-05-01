@@ -20,20 +20,16 @@
         "source": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-main-72:\\color\\bottom_nav_item_color.xml"
     },
     {
-        "merged": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-debug-70:\\mipmap-xhdpi_ic_launcher.png.flat",
-        "source": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-main-72:\\mipmap-xhdpi\\ic_launcher.png"
-    },
-    {
         "merged": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-debug-70:\\layout_activity_landing.xml.flat",
         "source": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-main-72:\\layout\\activity_landing.xml"
     },
     {
-        "merged": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-debug-70:\\mipmap-xxxhdpi_ic_launcher_round.png.flat",
-        "source": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-main-72:\\mipmap-xxxhdpi\\ic_launcher_round.png"
+        "merged": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-debug-70:\\mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-main-72:\\mipmap-xhdpi\\ic_launcher.png"
     },
     {
-        "merged": "com.example.chowcheck.app-debug-70:/menu_bottom_nav_menu.xml.flat",
-        "source": "com.example.chowcheck.app-main-72:/menu/bottom_nav_menu.xml"
+        "merged": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-debug-70:\\mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-main-72:\\mipmap-xxxhdpi\\ic_launcher_round.png"
     },
     {
         "merged": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-debug-70:\\xml_data_extraction_rules.xml.flat",
@@ -44,12 +40,12 @@
         "source": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-main-72:\\layout\\activity_calorie_info.xml"
     },
     {
-        "merged": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-debug-70:\\layout_fragment_profile.xml.flat",
-        "source": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-main-72:\\layout\\fragment_profile.xml"
-    },
-    {
         "merged": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-debug-70:\\mipmap-xhdpi_ic_launcher_round.png.flat",
         "source": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-main-72:\\mipmap-xhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-debug-70:\\layout_fragment_profile.xml.flat",
+        "source": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-main-72:\\layout\\fragment_profile.xml"
     },
     {
         "merged": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-debug-70:\\drawable_rounded_panel2.xml.flat",
@@ -138,6 +134,10 @@
     {
         "merged": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-debug-70:\\layout_activity_settings.xml.flat",
         "source": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-main-72:\\layout\\activity_settings.xml"
+    },
+    {
+        "merged": "com.example.chowcheck.app-debug-70:/layout_fragment_results_tab.xml.flat",
+        "source": "com.example.chowcheck.app-main-72:/layout/fragment_results_tab.xml"
     },
     {
         "merged": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-debug-70:\\drawable_curved_panel.xml.flat",

@@ -74,6 +74,7 @@ MERGED from [androidx.lifecycle:lifecycle-runtime-ktx-android:2.8.7] C:\Users\an
 MERGED from [androidx.compose.runtime:runtime-saveable-android:1.7.0] C:\Users\andre\.gradle\caches\transforms-3\d6b9fbcf6dfa1c38434a9a2ecec4080e\transformed\runtime-saveable-release\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.compose.runtime:runtime-android:1.7.0] C:\Users\andre\.gradle\caches\transforms-3\e18c421538ae094ed9e776c82984bd5c\transformed\runtime-release\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\andre\.gradle\caches\transforms-3\36ba590eccf3fb1e634c5724016932a6\transformed\cardview-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [com.github.PhilJay:MPAndroidChart:v3.1.0] C:\Users\andre\.gradle\caches\transforms-3\4aef958a20552ce736deae73e3e36165\transformed\MPAndroidChart-v3.1.0\AndroidManifest.xml:2:1-20:12
 MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\andre\.gradle\caches\transforms-3\c8630116a84f0409f1be28a6880e679f\transformed\cursoradapter-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\andre\.gradle\caches\transforms-3\61540819d5b86eedfba67260fcfb8865\transformed\profileinstaller-1.4.0\AndroidManifest.xml:17:1-55:12
 MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\andre\.gradle\caches\transforms-3\5b43cd2ff4cf143e93a2b4fd9c6e695e\transformed\interpolator-1.0.0\AndroidManifest.xml:17:1-22:12
@@ -362,6 +363,8 @@ MERGED from [androidx.compose.runtime:runtime-android:1.7.0] C:\Users\andre\.gra
 MERGED from [androidx.compose.runtime:runtime-android:1.7.0] C:\Users\andre\.gradle\caches\transforms-3\e18c421538ae094ed9e776c82984bd5c\transformed\runtime-release\AndroidManifest.xml:5:5-44
 MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\andre\.gradle\caches\transforms-3\36ba590eccf3fb1e634c5724016932a6\transformed\cardview-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\andre\.gradle\caches\transforms-3\36ba590eccf3fb1e634c5724016932a6\transformed\cardview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [com.github.PhilJay:MPAndroidChart:v3.1.0] C:\Users\andre\.gradle\caches\transforms-3\4aef958a20552ce736deae73e3e36165\transformed\MPAndroidChart-v3.1.0\AndroidManifest.xml:16:5-18:41
+MERGED from [com.github.PhilJay:MPAndroidChart:v3.1.0] C:\Users\andre\.gradle\caches\transforms-3\4aef958a20552ce736deae73e3e36165\transformed\MPAndroidChart-v3.1.0\AndroidManifest.xml:16:5-18:41
 MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\andre\.gradle\caches\transforms-3\c8630116a84f0409f1be28a6880e679f\transformed\cursoradapter-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\andre\.gradle\caches\transforms-3\c8630116a84f0409f1be28a6880e679f\transformed\cursoradapter-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.profileinstaller:profileinstaller:1.4.0] C:\Users\andre\.gradle\caches\transforms-3\61540819d5b86eedfba67260fcfb8865\transformed\profileinstaller-1.4.0\AndroidManifest.xml:21:5-44
