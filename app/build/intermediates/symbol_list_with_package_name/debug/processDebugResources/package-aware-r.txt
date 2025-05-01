@@ -3659,8 +3659,10 @@ id pooling_container_listener_holder_tag
 id position
 id postLayout
 id pressed
+id profileDiary
 id profileFragment
 id profilePicture
+id profileVisibility
 id progress_circular
 id progress_horizontal
 id radio
@@ -3724,7 +3726,9 @@ id south
 id spacer
 id special_effects_controller_view_tag
 id spinnerActivityLevel
+id spinnerProfile
 id spinnerSex
+id spinnerVisibilty
 id spinnerWeeklyChange
 id spline
 id split_action_bar
@@ -3753,6 +3757,7 @@ id submenuarrow
 id submit_area
 id supportScrollUp
 id switch2FA
+id switchDataCollect
 id switchGoalReminder
 id switchMealReminder
 id switchProgressReminder
@@ -3777,6 +3782,8 @@ id text
 id text2
 id text2FA
 id textChangePass
+id textDataCollect
+id textDiary
 id textEnd
 id textLinkedAcc
 id textSpacerNoButtons
@@ -3796,6 +3803,7 @@ id textViewLoginLink
 id textViewLunchLabel
 id textViewLunchTotalCalories
 id textViewTitle
+id textVisibility
 id text_input_end_icon
 id text_input_error_icon
 id text_input_start_icon
@@ -3981,6 +3989,7 @@ layout activity_health_profile
 layout activity_landing
 layout activity_login
 layout activity_notification
+layout activity_privacy
 layout activity_register
 layout activity_security
 layout activity_settings

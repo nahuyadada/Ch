@@ -27,6 +27,6 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginStart="16dp"
-        android:src="@drawable/profile2" app:tint="?android:attr/textColorSecondary"/>
+        android:src="@drawable/right_arrow" app:tint="?android:attr/textColorSecondary"/>
 
 </LinearLayout>

@@ -39,8 +39,7 @@
             android:name=".SettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".LandingActivity"
-            android:theme="@style/Theme.AppCompat.Light" />
+            android:name=".LandingActivity"/>
         <activity
             android:name=".LoginActivity"
             android:exported="true">

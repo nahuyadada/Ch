@@ -5,6 +5,7 @@
         <item name="colorPrimary">@color/nav_item_selected_dark_green</item>
         <item name="colorPrimaryVariant">@color/nav_item_selected_dark_green</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="editTextColor">@color/black</item>
     </style>
     <style name="ShapeAppearance.App.Circle" parent="">
         <item name="cornerFamily">rounded</item>

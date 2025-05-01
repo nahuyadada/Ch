@@ -4,7 +4,7 @@
             "outputFile": "com.example.chowcheck.app-mergeDebugResources-68:/values-ldltr-v21/values-ldltr-v21.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\andre\\.gradle\\caches\\transforms-3\\f9696c245ce9343b6ea8a9e734457490\\transformed\\appcompat-1.7.0\\res\\values-ldltr-v21\\values-ldltr-v21.xml",
+                    "source": "C:\\Users\\Miggy\\.gradle\\caches\\transforms-3\\f9696c245ce9343b6ea8a9e734457490\\transformed\\appcompat-1.7.0\\res\\values-ldltr-v21\\values-ldltr-v21.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

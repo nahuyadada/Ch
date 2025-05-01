@@ -14,15 +14,25 @@
 
         <ImageView
             android:id="@+id/calendarIconImageView"
-            android:layout_width="30dp" android:layout_height="50dp" android:src="@drawable/calendar"
+            android:layout_width="35dp"
+            android:layout_height="50dp"
             android:contentDescription="Calendar Icon"
+            android:src="@drawable/calendar"
+            app:layout_constraintBottom_toBottomOf="@+id/dateTextView"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/dateTextView"     app:layout_constraintBottom_toBottomOf="@+id/dateTextView" /> <TextView
-        android:id="@+id/dateTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"  android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:gravity="center_vertical" app:layout_constraintStart_toEndOf="@+id/calendarIconImageView" app:layout_constraintTop_toTopOf="parent" tools:text="Today, May 1, 2025" />
+            app:layout_constraintTop_toTopOf="@+id/dateTextView"
+            app:layout_constraintVertical_bias="0.384" />
+
+        <TextView
+            android:id="@+id/dateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:gravity="center_vertical"
+            app:layout_constraintStart_toEndOf="@+id/calendarIconImageView"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Today, May 1, 2025" />
         <androidx.cardview.widget.CardView
             android:id="@+id/calorieCardView"
             android:layout_width="0dp"
@@ -180,10 +190,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Time to log your weekly weight!"
+                    android:text="Time to log your daily/weekly weight!"
                     android:textColor="?attr/colorPrimary"
                     android:textStyle="italic"
-                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/lastWeightTextView"
