@@ -3238,6 +3238,7 @@ int id auto 0x7f090055
 int id autoComplete 0x7f090056
 int id autoCompleteToEnd 0x7f090057
 int id autoCompleteToStart 0x7f090058
+int id averageCaloriesTextView 0x7f090277
 int id axisRelative 0x7f090059
 int id barrier 0x7f09005a
 int id baseline 0x7f09005b
@@ -3268,6 +3269,7 @@ int id buttonSubmitInfo 0x7f090073
 int id cache_measures 0x7f090074
 int id callMeasure 0x7f090075
 int id calorie_panel 0x7f090076
+int id caloriesProgressBar 0x7f090278
 int id cancel_button 0x7f090077
 int id cardBreakfast 0x7f090078
 int id cardDinner 0x7f090079
@@ -3307,6 +3309,7 @@ int id cos 0x7f09009a
 int id counterclockwise 0x7f09009b
 int id cradle 0x7f09009c
 int id currentState 0x7f09009d
+int id currentWeightTextView 0x7f090279
 int id custom 0x7f09009e
 int id customPanel 0x7f09009f
 int id cut 0x7f0900a0
@@ -3341,6 +3344,7 @@ int id disableIntraAutoTransition 0x7f0900bc
 int id disablePostScroll 0x7f0900bd
 int id disableScroll 0x7f0900be
 int id disjoint 0x7f0900bf
+int id distanceFromTargetTextView 0x7f09027a
 int id dragAnticlockwise 0x7f0900c0
 int id dragClockwise 0x7f0900c1
 int id dragDown 0x7f0900c2
@@ -3354,6 +3358,7 @@ int id easeIn 0x7f0900c9
 int id easeInOut 0x7f0900ca
 int id easeOut 0x7f0900cb
 int id east 0x7f0900cc
+int id eatenCaloriesTextView 0x7f09027b
 int id edge 0x7f0900cd
 int id editTextAge 0x7f0900ce
 int id editTextConfirmNewPassword 0x7f0900cf
@@ -3401,6 +3406,7 @@ int id frost 0x7f0900f7
 int id fullscreen_header 0x7f0900f8
 int id ghost_view 0x7f0900f9
 int id ghost_view_holder 0x7f0900fa
+int id goalCaloriesTextView 0x7f09027c
 int id gone 0x7f0900fb
 int id graph 0x7f0900fc
 int id graph_wrap 0x7f0900fd
@@ -3446,6 +3452,7 @@ int id layoutDinnerItems 0x7f090123
 int id layoutLinkedAcc 0x7f090124
 int id layoutLunchItems 0x7f090125
 int id left 0x7f090126
+int id leftCaloriesTextView 0x7f09027d
 int id leftToRight 0x7f090127
 int id legacy 0x7f090128
 int id line1 0x7f090129
@@ -3490,6 +3497,7 @@ int id month_navigation_next 0x7f09014f
 int id month_navigation_previous 0x7f090150
 int id month_title 0x7f090151
 int id motion_base 0x7f090152
+int id motivationTextView 0x7f09027e
 int id mtrl_anchor_parent 0x7f090153
 int id mtrl_calendar_day_selector_frame 0x7f090154
 int id mtrl_calendar_days_of_week 0x7f090155
@@ -3657,6 +3665,7 @@ int id start 0x7f0901f5
 int id startHorizontal 0x7f0901f6
 int id startToEnd 0x7f0901f7
 int id startVertical 0x7f0901f8
+int id startingWeightTextView 0x7f09027f
 int id staticLayout 0x7f0901f9
 int id staticPostLayout 0x7f0901fa
 int id stop 0x7f0901fb
@@ -3670,9 +3679,7 @@ int id switchGoalReminder 0x7f090202
 int id switchMealReminder 0x7f090203
 int id switchProgressReminder 0x7f090204
 int id switchWaterReminder 0x7f090205
-int id tabDataTextView 0x7f090206
 int id tabMode 0x7f090207
-int id tabNameTextView 0x7f090208
 int id tag_accessibility_actions 0x7f090209
 int id tag_accessibility_clickable_spans 0x7f09020a
 int id tag_accessibility_heading 0x7f09020b
@@ -3686,6 +3693,7 @@ int id tag_transition_group 0x7f090212
 int id tag_unhandled_key_event_manager 0x7f090213
 int id tag_unhandled_key_listeners 0x7f090214
 int id tag_window_insets_animation_callback 0x7f090215
+int id targetWeightTextView 0x7f090280
 int id teamVision 0x7f090216
 int id text 0x7f090217
 int id text2 0x7f090218
@@ -3768,6 +3776,8 @@ int id view_tree_saved_state_registry_owner 0x7f090264
 int id view_tree_view_model_store_owner 0x7f090265
 int id visible 0x7f090266
 int id visible_removing_fragment_view_tag 0x7f090267
+int id weightChangeTextView 0x7f090281
+int id weightChartView 0x7f090282
 int id weight_panel 0x7f090268
 int id weight_scale_icon 0x7f090269
 int id west 0x7f09026a

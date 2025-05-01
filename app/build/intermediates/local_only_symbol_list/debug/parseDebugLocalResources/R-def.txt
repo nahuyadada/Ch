@@ -43,6 +43,7 @@ drawable rounded_panel2
 drawable scale
 drawable security
 drawable settings
+id averageCaloriesTextView
 id bottomNav
 id btnBack
 id btnEditProfile
@@ -57,10 +58,12 @@ id buttonLogin
 id buttonRegister
 id buttonSubmitInfo
 id calorie_panel
+id caloriesProgressBar
 id cardBreakfast
 id cardDinner
 id cardLunch
 id cardWater
+id currentWeightTextView
 id dashboard_content
 id dev1About
 id dev1Contact
@@ -72,6 +75,8 @@ id dev2Contact
 id dev2Image
 id dev2Name
 id dev2Skills
+id distanceFromTargetTextView
+id eatenCaloriesTextView
 id editTextAge
 id editTextConfirmNewPassword
 id editTextConfirmPassword
@@ -87,6 +92,7 @@ id editTextWeightGoal
 id edtCalories
 id edtFood
 id fragment_container
+id goalCaloriesTextView
 id header
 id headerLayout
 id iconCalendar
@@ -96,7 +102,9 @@ id layoutChangePassword
 id layoutDinnerItems
 id layoutLinkedAcc
 id layoutLunchItems
+id leftCaloriesTextView
 id main
+id motivationTextView
 id navigation_diary
 id navigation_food_log
 id navigation_profile
@@ -119,14 +127,14 @@ id spinnerProfile
 id spinnerSex
 id spinnerVisibilty
 id spinnerWeeklyChange
+id startingWeightTextView
 id switch2FA
 id switchDataCollect
 id switchGoalReminder
 id switchMealReminder
 id switchProgressReminder
 id switchWaterReminder
-id tabDataTextView
-id tabNameTextView
+id targetWeightTextView
 id teamVision
 id text2FA
 id textChangePass
@@ -159,6 +167,8 @@ id tracker_panels
 id tracker_scrollview
 id txtUsername
 id userDetails
+id weightChangeTextView
+id weightChartView
 id weight_panel
 id weight_scale_icon
 layout activity_calorie_info
