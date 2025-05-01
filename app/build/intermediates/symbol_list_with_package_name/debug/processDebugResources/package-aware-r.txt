@@ -3081,6 +3081,7 @@ drawable diary
 drawable diary2
 drawable edit
 drawable help
+drawable ic_arrow_back
 drawable ic_arrow_back_black_24
 drawable ic_call_answer
 drawable ic_call_answer_low
@@ -3265,6 +3266,7 @@ id action_menu_presenter
 id action_mode_bar
 id action_mode_bar_stub
 id action_mode_close_button
+id action_profileFragment_to_resultsTabFragment
 id action_text
 id actions
 id activity_chooser_view_content
@@ -3303,12 +3305,10 @@ id bounceBoth
 id bounceEnd
 id bounceStart
 id btnBack
-id btnEditProfile
-id btnSettings
+id btnSaveChanges
 id buttonAddBreakfast
 id buttonAddDinner
 id buttonAddLunch
-id buttonAddWater
 id buttonBack
 id buttonChangePassword
 id buttonLogin
@@ -3316,6 +3316,7 @@ id buttonPanel
 id buttonRegister
 id buttonSubmitInfo
 id cache_measures
+id calendarIconImageView
 id callMeasure
 id calorieCardView
 id calorieTitleTextView
@@ -3324,7 +3325,6 @@ id cancel_button
 id cardBreakfast
 id cardDinner
 id cardLunch
-id cardWater
 id carryVelocity
 id center
 id centerCrop
@@ -3413,6 +3413,7 @@ id eatenCaloriesTextView
 id eatenLabelTextView
 id eatenValueTextView
 id edge
+id editProfileToolbar
 id editTextAge
 id editTextConfirmNewPassword
 id editTextConfirmPassword
@@ -3425,6 +3426,7 @@ id editTextTimeframeWeeks
 id editTextUsername
 id editTextWeight
 id editTextWeightGoal
+id editUserDetails
 id edit_query
 id edit_text_id
 id edtCalories
@@ -3471,6 +3473,7 @@ id grouping
 id groups
 id header
 id headerLayout
+id headerTitle
 id header_title
 id hide_ime_id
 id hide_in_inspector_tag
@@ -3629,6 +3632,14 @@ id open_search_view_search_prefix
 id open_search_view_status_bar_spacer
 id open_search_view_toolbar
 id open_search_view_toolbar_container
+id optionChevron
+id optionEditProfile
+id optionIcon
+id optionLogout
+id optionProgress
+id optionSettings
+id optionTitle
+id optionsContainer
 id outline
 id outward
 id overshoot
@@ -3648,7 +3659,6 @@ id pooling_container_listener_holder_tag
 id position
 id postLayout
 id pressed
-id profileContainer
 id profileDiary
 id profileFragment
 id profilePicture
@@ -3694,6 +3704,7 @@ id securityLinkedAcc
 id select_dialog_listview
 id selected
 id selection_type
+id separator
 id settingsListView
 id sharedValueSet
 id sharedValueUnset
@@ -3734,8 +3745,12 @@ id startHorizontal
 id startToEnd
 id startVertical
 id startingWeightTextView
+id statCurrentWeightValue
+id statWeightChangeLabel
+id statWeightChangeValue
 id staticLayout
 id staticPostLayout
+id statsContainer
 id stop
 id stretch
 id submenuarrow
@@ -3788,7 +3803,6 @@ id textViewLoginLink
 id textViewLunchLabel
 id textViewLunchTotalCalories
 id textViewTitle
-id textViewWaterDetails
 id textVisibility
 id text_input_end_icon
 id text_input_error_icon
@@ -3826,7 +3840,6 @@ id uniform
 id unlabeled
 id up
 id useLogo
-id userDetails
 id vertical
 id vertical_only
 id view_offset_helper
@@ -3971,6 +3984,7 @@ layout abc_tooltip
 layout activity_calorie_info
 layout activity_change_password
 layout activity_developer
+layout activity_edit_profile
 layout activity_health_profile
 layout activity_landing
 layout activity_login
@@ -4004,6 +4018,7 @@ layout fragment_results_tab
 layout ime_base_split_test_activity
 layout ime_secondary_split_test_activity
 layout list_item_food
+layout list_item_profile_option
 layout m3_alert_dialog
 layout m3_alert_dialog_actions
 layout m3_alert_dialog_title
@@ -4678,6 +4693,7 @@ style RtlOverlay_Widget_AppCompat_Search_DropDown_Text
 style RtlOverlay_Widget_AppCompat_SearchView_MagIcon
 style RtlUnderlay_Widget_AppCompat_ActionButton
 style RtlUnderlay_Widget_AppCompat_ActionButton_Overflow
+style ShapeAppearance_App_Circle
 style ShapeAppearance_M3_Comp_Badge_Large_Shape
 style ShapeAppearance_M3_Comp_Badge_Shape
 style ShapeAppearance_M3_Comp_BottomAppBar_Container_Shape

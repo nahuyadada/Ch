@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:2:1-56:12
-INJECTED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:2:1-56:12
-INJECTED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:2:1-56:12
-INJECTED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:2:1-56:12
+ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:2:1-59:12
+INJECTED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:2:1-59:12
+INJECTED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:2:1-59:12
+INJECTED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:2:1-59:12
 MERGED from [androidx.navigation:navigation-common:2.7.7] C:\Users\andre\.gradle\caches\transforms-3\63cde071ff19f2131234b5647fa1f340\transformed\navigation-common-2.7.7\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.navigation:navigation-common-ktx:2.7.7] C:\Users\andre\.gradle\caches\transforms-3\38fad2d0accfac5cc53a3689239e52e9\transformed\navigation-common-ktx-2.7.7\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.navigation:navigation-runtime:2.7.7] C:\Users\andre\.gradle\caches\transforms-3\e575fc186dd1f6e1925397b4555547c4\transformed\navigation-runtime-2.7.7\AndroidManifest.xml:17:1-22:12
@@ -97,8 +97,8 @@ MERGED from [androidx.annotation:annotation-experimental:1.4.1] C:\Users\andre\.
 	xmlns:android
 		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:2:11-69
 application
-ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:5:5-54:19
-INJECTED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:5:5-54:19
+ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:5:5-57:19
+INJECTED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:5:5-57:19
 MERGED from [com.google.android.material:material:1.12.0] C:\Users\andre\.gradle\caches\transforms-3\fa4206635fe06c31f4ebcbd5a155e03b\transformed\material-1.12.0\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.12.0] C:\Users\andre\.gradle\caches\transforms-3\fa4206635fe06c31f4ebcbd5a155e03b\transformed\material-1.12.0\AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.2.1] C:\Users\andre\.gradle\caches\transforms-3\94fb62fe9da3d05a614916405621bfb0\transformed\constraintlayout-2.2.1\AndroidManifest.xml:7:5-20
@@ -138,87 +138,93 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\an
 	android:allowBackup
 		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:6:9-35
 	android:theme
-		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:13:9-53
+		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:13:9-47
 	android:dataExtractionRules
 		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:7:9-65
-activity#com.example.chowcheck.ChangePasswordActivity
+activity#com.example.chowcheck.EditProfileActivity
 ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:14:9-16:40
 	android:exported
 		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:16:13-37
 	android:name
-		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:15:13-51
-activity#com.example.chowcheck.CalorieInfoActivity
+		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:15:13-48
+activity#com.example.chowcheck.ChangePasswordActivity
 ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:17:9-19:40
 	android:exported
 		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:19:13-37
 	android:name
-		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:18:13-48
-activity#com.example.chowcheck.SecurityActivity
+		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:18:13-51
+activity#com.example.chowcheck.CalorieInfoActivity
 ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:20:9-22:40
 	android:exported
 		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:22:13-37
 	android:name
-		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:21:13-45
-activity#com.example.chowcheck.NotificationActivity
+		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:21:13-48
+activity#com.example.chowcheck.SecurityActivity
 ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:23:9-25:40
 	android:exported
 		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:25:13-37
 	android:name
-		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:24:13-49
-activity#com.example.chowcheck.PrivacyActivity
+		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:24:13-45
+activity#com.example.chowcheck.NotificationActivity
 ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:26:9-28:40
 	android:exported
 		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:28:13-37
 	android:name
-		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:27:13-44
-activity#com.example.chowcheck.RegisterActivity
+		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:27:13-49
+activity#com.example.chowcheck.PrivacyActivity
 ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:29:9-31:40
 	android:exported
 		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:31:13-37
 	android:name
-		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:30:13-45
-activity#com.example.chowcheck.DeveloperActivity
+		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:30:13-44
+activity#com.example.chowcheck.RegisterActivity
 ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:32:9-34:40
 	android:exported
 		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:34:13-37
 	android:name
-		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:33:13-46
-activity#com.example.chowcheck.SettingsActivity
+		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:33:13-45
+activity#com.example.chowcheck.DeveloperActivity
 ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:35:9-37:40
 	android:exported
 		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:37:13-37
 	android:name
-		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:36:13-45
+		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:36:13-46
+activity#com.example.chowcheck.SettingsActivity
+ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:38:9-40:40
+	android:exported
+		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:40:13-37
+	android:name
+		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:39:13-45
 activity#com.example.chowcheck.LandingActivity
-ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:38:9-40:60
+ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:41:9-43:60
 	android:theme
-		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:40:13-57
+		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:43:13-57
 	android:name
-		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:39:13-44
+		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:42:13-44
 activity#com.example.chowcheck.LoginActivity
-ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:41:9-49:20
+ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:44:9-52:20
 	android:exported
-		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:43:13-36
+		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:46:13-36
 	android:name
-		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:42:13-42
+		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:45:13-42
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:44:13-48:29
+ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:47:13-51:29
 action#android.intent.action.MAIN
-ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:45:17-69
+ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:48:17-69
 	android:name
-		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:45:25-66
+		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:48:25-66
 category#android.intent.category.LAUNCHER
-ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:47:17-77
+ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:50:17-77
 	android:name
-		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:47:27-74
+		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:50:27-74
 activity#com.example.chowcheck.MainActivity
-ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:50:9-53:54
+ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:53:9-56:54
 	android:exported
-		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:52:13-36
+		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:55:13-36
 	android:theme
-		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:53:13-51
+		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:56:13-51
 	android:name
-		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:51:13-41
+		ADDED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml:54:13-41
 uses-sdk
 INJECTED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\andre\Desktop\Ch\app\src\main\AndroidManifest.xml

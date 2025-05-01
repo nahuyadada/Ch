@@ -50,40 +50,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Water Intake"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:paddingBottom="4dp"
-                android:layout_marginStart="4dp"/>
-            <LinearLayout
-                android:id="@+id/cardWater"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rounded_panel"
-                android:padding="16dp"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="16dp">
-                <TextView
-                    android:id="@+id/textViewWaterDetails"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Water 0.0L (0%)"
-                    android:textSize="16sp"/>
-                <ImageButton
-                    android:id="@+id/buttonAddWater"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/add"
-                    android:contentDescription="Add Water"
-                    android:scaleType="fitCenter"
-                    android:padding="4dp"
-                    android:layout_marginStart="16dp"/>
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="Daily Meals"
                 android:textSize="18sp"
                 android:textStyle="bold"

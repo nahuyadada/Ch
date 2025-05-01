@@ -27,7 +27,6 @@ class FoodLogFragment : Fragment() {
 
     // --- Views ---
     private lateinit var textViewDate: TextView
-    private lateinit var buttonAddWater: ImageButton
     private lateinit var buttonAddBreakfast: ImageButton
     private lateinit var buttonAddLunch: ImageButton
     private lateinit var buttonAddDinner: ImageButton
@@ -115,8 +114,6 @@ class FoodLogFragment : Fragment() {
 
     private fun initializeViews(view: View) {
         textViewDate = view.findViewById(R.id.textViewDate)
-        buttonAddWater = view.findViewById(R.id.buttonAddWater)
-        textViewWaterDetails = view.findViewById(R.id.textViewWaterDetails)
 
         buttonAddBreakfast = view.findViewById(R.id.buttonAddBreakfast)
         buttonAddLunch = view.findViewById(R.id.buttonAddLunch)
@@ -265,11 +262,6 @@ class FoodLogFragment : Fragment() {
 
 
     private fun setupClickListeners() {
-        buttonAddWater.setOnClickListener {
-            // Implement water logging logic if needed
-            Toast.makeText(context, "Add Water clicked", Toast.LENGTH_SHORT).show()
-            // After logging: Save new water value and call loadAndDisplayWaterData()
-        }
 
         buttonAddBreakfast.setOnClickListener {
             showAddMealDialog(MEAL_TYPE_BREAKFAST)

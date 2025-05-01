@@ -1,185 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E8F5EC"
-    android:padding="20dp"
+    android:background="#E8F5EC"  android:fillViewport="true"
     tools:context=".frag.ProfileFragment">
 
-    <LinearLayout
-        android:id="@+id/header"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:padding="8dp">
+        android:paddingBottom="24dp"> <TextView
+        android:id="@+id/headerTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Profile" android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/statsContainer"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Profile"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginStart="0dp"/>
-    </LinearLayout>
+            android:orientation="horizontal"
+            android:layout_marginTop="24dp"
+            android:paddingHorizontal="16dp"
+            app:layout_constraintTop_toBottomOf="@id/headerTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
-    <LinearLayout
-        android:id="@+id/profileContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/header"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_marginTop="20dp">
-        <ImageView
-            android:id="@+id/profilePicture"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/profileimage"
-            android:scaleType="centerCrop"/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Change" android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+                <TextView
+                    android:id="@+id/statWeightChangeValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="- kg" tools:text="+2.5 kg"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/statWeightChangeLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="since start"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+            </LinearLayout>
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/profilePicture"
+                android:layout_width="80dp" android:layout_height="80dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginHorizontal="16dp"
+                android:src="@drawable/profileimage" android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"/>
+            <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Current" android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+            <TextView
+                android:id="@+id/statCurrentWeightValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-- kg" tools:text="78.5 kg"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Weight"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+        </LinearLayout>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/txtUsername"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Username"
-            android:textSize="18sp"
+            tools:text="andrevyreyes"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textStyle="bold"
-            android:layout_marginTop="8dp"/>
-    </LinearLayout>
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/statsContainer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-    <LinearLayout
-        android:id="@+id/userDetails"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/profileContainer"
-        android:orientation="vertical"
-        android:layout_marginTop="20dp"
-        android:padding="10dp"
-        android:background="@drawable/rounded_panel">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="2dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="110dp"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="Name:"
-                android:textSize="16sp" />
-            <EditText
-                android:id="@+id/editTextName"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName|textCapWords"
-                android:hint="Name" />
-        </LinearLayout>
+        <View
+            android:id="@+id/separator"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            android:layout_marginTop="24dp"
+            android:layout_marginHorizontal="16dp"
+            app:layout_constraintTop_toBottomOf="@id/txtUsername"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/optionsContainer"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="2dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="110dp"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="Age:"
-                android:textSize="16sp" />
-            <EditText
-                android:id="@+id/editTextAge"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="number"
-                android:hint="Age" />
+            android:orientation="vertical"
+            android:layout_marginTop="16dp"
+            android:paddingHorizontal="16dp"
+            app:layout_constraintTop_toBottomOf="@id/separator"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <include layout="@layout/list_item_profile_option"
+                android:id="@+id/optionEditProfile" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                android:layout_marginVertical="4dp"/> <include layout="@layout/list_item_profile_option"
+            android:id="@+id/optionProgress" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                android:layout_marginVertical="4dp"/> <include layout="@layout/list_item_profile_option"
+            android:id="@+id/optionSettings" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider"
+                android:layout_marginVertical="4dp"/> <include layout="@layout/list_item_profile_option"
+            android:id="@+id/optionLogout" />
+
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="2dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="110dp"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="Height (cm):"
-                android:textSize="16sp" />
-            <EditText
-                android:id="@+id/editTextHeight"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="numberDecimal"
-                android:hint="Height" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="2dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="110dp"
-                android:layout_height="wrap_content"
-                android:text="Weight (kg):"
-                android:textSize="16sp"
-                android:padding="8dp"/>
-            <EditText
-                android:id="@+id/editTextWeight"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="numberDecimal"
-                android:hint="Weight" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="2dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="110dp"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="Weight Goal:"
-                android:textSize="16sp" />
-            <EditText
-                android:id="@+id/editTextWeightGoal"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="numberDecimal"
-                android:hint="Weight Goal" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/btnEditProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Update Profile"
-        android:textSize="16sp"
-        android:textColor="#FFFFFF"
-        android:background="@drawable/rounded_button"
-        android:layout_below="@id/userDetails"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
-        android:paddingTop="12dp"
-        android:paddingBottom="12dp"/>
-
-</RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

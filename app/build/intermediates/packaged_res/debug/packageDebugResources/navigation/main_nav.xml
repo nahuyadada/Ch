@@ -3,15 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav"
-    app:startDestination="@id/diaryFragment"> <fragment
-    android:id="@+id/diaryFragment"
-    android:name="com.example.chowcheck.frag.DiaryFragment"
-    android:label="fragment_diary"
-    tools:layout="@layout/fragment_diary" >
-    <action
-        android:id="@+id/action_diaryFragment_to_foodLogFragment"
-        app:destination="@id/foodLogFragment" />
-</fragment>
+    app:startDestination="@id/diaryFragment">
+
+    <fragment
+        android:id="@+id/diaryFragment"
+        android:name="com.example.chowcheck.frag.DiaryFragment"
+        android:label="fragment_diary"
+        tools:layout="@layout/fragment_diary" >
+        <action
+            android:id="@+id/action_diaryFragment_to_foodLogFragment"
+            app:destination="@id/foodLogFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/foodLogFragment"
@@ -30,6 +32,11 @@
         android:id="@+id/profileFragment"
         android:name="com.example.chowcheck.frag.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+
+        <action
+            android:id="@+id/action_profileFragment_to_resultsTabFragment"
+            app:destination="@id/resultsTabFragment" />
+    </fragment>
 
 </navigation>

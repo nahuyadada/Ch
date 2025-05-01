@@ -10,7 +10,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/chowcheck"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light">
+        android:theme="@style/Theme.ChowCheck">
+        <activity
+            android:name=".EditProfileActivity"
+            android:exported="false" />
         <activity
             android:name=".ChangePasswordActivity"
             android:exported="false" />

@@ -26,7 +26,10 @@
         android:roundIcon="@mipmap/chowcheck"
         android:supportsRtl="true"
         android:testOnly="true"
-        android:theme="@style/Theme.AppCompat.Light" >
+        android:theme="@style/Theme.ChowCheck" >
+        <activity
+            android:name="com.example.chowcheck.EditProfileActivity"
+            android:exported="false" />
         <activity
             android:name="com.example.chowcheck.ChangePasswordActivity"
             android:exported="false" />
