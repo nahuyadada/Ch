@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E0F2F7"  tools:context=".RegisterActivity">
+    android:background="#E8F5EC"
+    tools:context=".RegisterActivity">
 
     <TextView
         android:id="@+id/textViewTitle"
@@ -27,7 +28,8 @@
         android:layout_marginEnd="32dp"
         app:cardCornerRadius="15dp"
         app:cardElevation="4dp"
-        app:cardBackgroundColor="#F0FFF0" app:layout_constraintTop_toBottomOf="@id/textViewTitle"
+        android:background="#E0F2F7"
+        app:layout_constraintTop_toBottomOf="@id/textViewTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -88,7 +90,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="REGISTER"
-            android:backgroundTint="#556B2F" android:textColor="@android:color/white"
+            android:textColor="@android:color/white"
             android:layout_marginBottom="16dp"/>
 
         <TextView
