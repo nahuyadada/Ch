@@ -5,34 +5,50 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Food"
-        android:textSize="16sp"
-        android:textStyle="bold"/>
-
-    <EditText
-        android:id="@+id/edtFood"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter food"
-        android:textSize="16sp"/>
+        android:hint="Food Name">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtFood"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapWords" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Calories"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:layout_marginTop="8dp"/>
-
-    <EditText
-        android:id="@+id/edtCalories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter calories"
-        android:textSize="16sp"
-        android:inputType="number"/>
+        android:layout_marginTop="8dp"
+        android:text="Enter grams OR calories"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:hint="Grams">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtGrams"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="Calories (or auto-calculated)">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtCalories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number" />
+    </com.google.android.material.textfield.TextInputLayout>
+
 
 </LinearLayout>
