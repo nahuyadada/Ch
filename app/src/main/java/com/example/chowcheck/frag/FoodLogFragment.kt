@@ -8,7 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
+import android.widget.EditText // Assuming you use standard EditText, adjust if using Material TextInputEditText
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -24,6 +24,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import kotlin.math.roundToInt // To round calculated calories
 
 // Data class (keep as before or move to shared location)
 data class FoodEntry(
@@ -59,6 +60,21 @@ class FoodLogFragment : Fragment() {
     // Date formats (consistent with ViewModel and DiaryFragment)
     private val keyDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
     private val displayDateFormat = SimpleDateFormat("d MMMM, EEEE", Locale.getDefault())
+
+    // --- Simple Food Database (Placeholder) ---
+    // Maps food name (case-insensitive) to calories per gram (Double)
+    private val foodDatabase = mapOf(
+        "chicken breast" to 1.65, // cooked, skinless
+        "white rice" to 1.30,     // cooked
+        "broccoli" to 0.34,       // raw
+        "apple" to 0.52,          // raw
+        "olive oil" to 9.00,
+        "banana" to 0.89,
+        "egg" to 1.55,            // average large egg
+        "milk (whole)" to 0.61,
+        "cheddar cheese" to 4.04
+
+    )
 
     // --- Constants ---
     companion object {
@@ -109,8 +125,6 @@ class FoodLogFragment : Fragment() {
         // updateDateDisplay(initialDate)
         // loadAllMealData(initialDate)
     }
-
-    // Removed onResume override for data loading, Observer handles updates.
 
     private fun initializeViews(view: View) {
         textViewDate = view.findViewById(R.id.textViewDate)
@@ -261,6 +275,7 @@ class FoodLogFragment : Fragment() {
 
         val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_add_meal, null)
         val editTextFood = dialogView.findViewById<EditText>(R.id.edtFood)
+        val editTextGrams = dialogView.findViewById<EditText>(R.id.edtGrams) // New grams field
         val editTextCalories = dialogView.findViewById<EditText>(R.id.edtCalories)
         val dateToLog = dateViewModel.getCurrentSelectedDate() // Get date from ViewModel
 
@@ -269,26 +284,55 @@ class FoodLogFragment : Fragment() {
             .setView(dialogView)
             .setPositiveButton("Add") { dialog, _ ->
                 val foodName = editTextFood.text.toString().trim()
+                val gramsStr = editTextGrams.text.toString().trim() // Get grams input
                 val caloriesStr = editTextCalories.text.toString().trim()
 
                 if (foodName.isEmpty()) {
                     Toast.makeText(context, "Please enter food name", Toast.LENGTH_SHORT).show()
-                    // Consider keeping dialog open on validation failure
-                } else {
-                    val calories = caloriesStr.toIntOrNull()
-                    if (calories == null || calories < 0) {
-                        Toast.makeText(context, "Please enter valid calories (0 or more)", Toast.LENGTH_SHORT).show()
+                    // Keep dialog open? Requires custom dialog handling
+                    return@setPositiveButton // Prevent dialog dismissal
+                }
+
+                var calculatedCalories: Int? = null
+
+                // 1. Try to calculate calories from grams if grams are provided
+                val grams = gramsStr.toDoubleOrNull()
+                if (grams != null && grams >= 0) {
+                    val calorieDensity = foodDatabase[foodName.toLowerCase(Locale.getDefault())] // Lookup case-insensitively
+                    if (calorieDensity != null) {
+                        calculatedCalories = (grams * calorieDensity).roundToInt() // Calculate and round
+                        Log.d(TAG, "Calculated calories for $foodName ($grams g): $calculatedCalories kcal")
                     } else {
-                        val newEntry = FoodEntry(
-                            foodName = foodName,
-                            calories = calories,
-                            timestamp = System.currentTimeMillis(), // Use current time for the entry timestamp itself
-                            mealType = mealType
-                        )
-                        saveFoodEntry(newEntry) // Save function uses ViewModel date for keys
-                        dialog.dismiss()
+                        // Food found in DB but grams entered, but food not in our *specific* calorie density map (shouldn't happen if map is used).
+                        // More likely: Food not found in the DB at all.
+                        Toast.makeText(context, "Food '$foodName' not found in database. Please enter calories manually.", Toast.LENGTH_LONG).show()
+                        // Keep dialog open? Or rely on the manual entry fallback below.
+                        // For simplicity here, we let it fall through to manual entry check.
+                        return@setPositiveButton // Prevent dialog dismissal if food not found but grams entered
                     }
                 }
+
+                // 2. If calories weren't calculated from grams (grams empty/invalid, or food not in db),
+                //    try to use the manually entered calories.
+                val finalCalories = calculatedCalories ?: caloriesStr.toIntOrNull()
+
+                if (finalCalories == null || finalCalories < 0) {
+                    // Failed to calculate from grams, and manual calories are invalid/missing
+                    Toast.makeText(context, "Please enter valid grams (or calories manually if food not found)", Toast.LENGTH_LONG).show()
+                    return@setPositiveButton // Prevent dialog dismissal
+                }
+
+                // --- If we reach here, we have a valid food name and valid calorie count ---
+
+                val newEntry = FoodEntry(
+                    foodName = foodName,
+                    calories = finalCalories,
+                    timestamp = System.currentTimeMillis(), // Use current time for the entry timestamp itself
+                    mealType = mealType
+                )
+                saveFoodEntry(newEntry) // Save function uses ViewModel date for keys
+                dialog.dismiss()
+
             }
             .setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
             .setCancelable(false)

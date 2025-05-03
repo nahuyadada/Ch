@@ -14,6 +14,7 @@ color white
 drawable add
 drawable ads
 drawable back
+drawable body_mass_index
 drawable calendar
 drawable compass
 drawable curved_panel
@@ -45,8 +46,10 @@ drawable scale
 drawable security
 drawable settings
 id action_diaryFragment_to_foodLogFragment
+id action_profileFragment_to_bmiFragment
 id action_profileFragment_to_resultsTabFragment
 id averageCaloriesTextView
+id bmiFragment
 id bottomNav
 id btnBack
 id btnSaveChanges
@@ -98,6 +101,7 @@ id editTextWeightGoal
 id editUserDetails
 id edtCalories
 id edtFood
+id edtGrams
 id foodLogFragment
 id fragment_container
 id goalCaloriesTextView
@@ -128,6 +132,7 @@ id notificationGoal
 id notificationMeal
 id notificationProgress
 id notificationWater
+id optionBmi
 id optionChevron
 id optionEditProfile
 id optionIcon
@@ -162,6 +167,10 @@ id teamVision
 id text2FA
 id textChangePass
 id textLinkedAcc
+id textViewBmiCategory
+id textViewBmiHeight
+id textViewBmiValue
+id textViewBmiWeight
 id textViewBreakfastLabel
 id textViewBreakfastTotalCalories
 id textViewDate
@@ -196,6 +205,7 @@ layout activity_register
 layout activity_security
 layout activity_settings
 layout dialog_add_meal
+layout fragment_bmi
 layout fragment_diary
 layout fragment_food_log
 layout fragment_navigation

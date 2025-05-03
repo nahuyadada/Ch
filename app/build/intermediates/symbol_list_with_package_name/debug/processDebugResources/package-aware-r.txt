@@ -3060,6 +3060,7 @@ drawable ads
 drawable avd_hide_password
 drawable avd_show_password
 drawable back
+drawable body_mass_index
 drawable btn_checkbox_checked_mtrl
 drawable btn_checkbox_checked_to_unchecked_mtrl_animation
 drawable btn_checkbox_unchecked_mtrl
@@ -3266,6 +3267,7 @@ id action_menu_presenter
 id action_mode_bar
 id action_mode_bar_stub
 id action_mode_close_button
+id action_profileFragment_to_bmiFragment
 id action_profileFragment_to_resultsTabFragment
 id action_text
 id actions
@@ -3298,6 +3300,7 @@ id beginning
 id below
 id bestChoice
 id blocking
+id bmiFragment
 id bottom
 id bottomNav
 id bounce
@@ -3431,6 +3434,7 @@ id edit_query
 id edit_text_id
 id edtCalories
 id edtFood
+id edtGrams
 id elastic
 id embed
 id end
@@ -3632,6 +3636,7 @@ id open_search_view_search_prefix
 id open_search_view_status_bar_spacer
 id open_search_view_toolbar
 id open_search_view_toolbar_container
+id optionBmi
 id optionChevron
 id optionEditProfile
 id optionIcon
@@ -3783,6 +3788,10 @@ id textSpacerNoButtons
 id textSpacerNoTitle
 id textStart
 id textTop
+id textViewBmiCategory
+id textViewBmiHeight
+id textViewBmiValue
+id textViewBmiWeight
 id textViewBreakfastLabel
 id textViewBreakfastTotalCalories
 id textViewDate
@@ -4001,6 +4010,7 @@ layout design_navigation_menu_item
 layout design_text_input_end_icon
 layout design_text_input_start_icon
 layout dialog_add_meal
+layout fragment_bmi
 layout fragment_diary
 layout fragment_food_log
 layout fragment_navigation

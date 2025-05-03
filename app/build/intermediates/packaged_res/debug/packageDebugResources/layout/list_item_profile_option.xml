@@ -8,25 +8,30 @@
     android:gravity="center_vertical"
     android:paddingVertical="12dp"
     android:paddingHorizontal="8dp"
-    android:background="?android:attr/selectableItemBackground" > <ImageView
-    android:id="@+id/optionIcon"
-    android:layout_width="24dp"
-    android:layout_height="24dp"
-    android:layout_marginEnd="16dp"
-    app:tint="?android:attr/textColorPrimary"
-    tools:srcCompat="@drawable/profile" /> <TextView
-    android:id="@+id/optionTitle"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_weight="1"
-    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-    tools:text="Option Title" />
+    android:background="?android:attr/selectableItemBackground" >
+
+    <ImageView
+        android:id="@+id/optionIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="16dp"
+        app:tint="?android:attr/textColorPrimary"
+        tools:srcCompat="@drawable/profile" />
+
+    <TextView
+        android:id="@+id/optionTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        tools:text="Option Title" />
 
     <ImageView
         android:id="@+id/optionChevron"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginStart="16dp"
-        android:src="@drawable/right_arrow" app:tint="?android:attr/textColorSecondary"/>
+        android:src="@drawable/right_arrow"
+        app:tint="?android:attr/textColorSecondary"/>
 
 </LinearLayout>

@@ -32,7 +32,9 @@ class ProfileFragment : Fragment() {
     private lateinit var statCurrentWeightValue: TextView
     // Option Rows (LinearLayouts)
     private lateinit var optionEditProfile: LinearLayout
-    private lateinit var optionGoals: LinearLayout
+    // NEW: BMI Option
+    private lateinit var optionBmi: LinearLayout
+    private lateinit var optionGoals: LinearLayout // This one exists but seems commented out in your setup
     private lateinit var optionProgress: LinearLayout
     private lateinit var optionSettings: LinearLayout
     private lateinit var optionLogout: LinearLayout
@@ -104,6 +106,7 @@ class ProfileFragment : Fragment() {
 
         // Find the LinearLayout containers for the options
         optionEditProfile = view.findViewById(R.id.optionEditProfile)
+        optionBmi = view.findViewById(R.id.optionBmi) // Initialize the new BMI option view
         optionProgress = view.findViewById(R.id.optionProgress)
         optionSettings = view.findViewById(R.id.optionSettings)
         optionLogout = view.findViewById(R.id.optionLogout)
@@ -153,7 +156,25 @@ class ProfileFragment : Fragment() {
             startActivity(intent)
         }
 
+        // Setup "BMI" Option
+        setupOptionRow(optionBmi, R.drawable.body_mass_index, "BMI") { // Make sure you have a drawable named 'body_mass_index' or similar
+            // Navigate to BmiFragment using Nav Component
+            try {
+                // ** IMPORTANT: Define this action in your main_nav.xml **
+                // <fragment android:id="@+id/profileFragment" ...>
+                //      <action android:id="@+id/action_profileFragment_to_bmiFragment"
+                //              app:destination="@id/bmiFragment" />
+                // </fragment>
+                findNavController().navigate(R.id.action_profileFragment_to_bmiFragment)
+            } catch (e: Exception) {
+                Log.e(TAG, "Navigation to BMI failed: ${e.message}")
+                Toast.makeText(context, "Could not open BMI page", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
         // Setup "Goals" Option
+        // setupOptionRow(optionGoals, R.drawable.goals_icon, "Goals") { /* Goals Navigation/Action */ }
 
 
         // Setup "Progress" Option
@@ -167,7 +188,7 @@ class ProfileFragment : Fragment() {
                 // </fragment>
                 findNavController().navigate(R.id.action_profileFragment_to_resultsTabFragment)
             } catch (e: Exception) {
-                Log.e(TAG, "Navigation to Results failed: ${e.message}")
+                Log.e(TAG, "Navigation to Progress failed: ${e.message}")
                 Toast.makeText(context, "Could not open Progress", Toast.LENGTH_SHORT).show()
             }
         }
@@ -186,7 +207,12 @@ class ProfileFragment : Fragment() {
     }
 
     // Helper function to configure each option row
-    private fun setupOptionRow(layout: LinearLayout, iconResId: Int, title: String, onClickAction: () -> Unit) {
+    private fun setupOptionRow(layout: LinearLayout?, iconResId: Int, title: String, onClickAction: () -> Unit) {
+        // Added null check for layout just in case include ID is wrong
+        if (layout == null) {
+            Log.e(TAG, "Layout for option '$title' not found!")
+            return
+        }
         try {
             val icon = layout.findViewById<ImageView>(R.id.optionIcon)
             val text = layout.findViewById<TextView>(R.id.optionTitle)
@@ -229,7 +255,7 @@ class ProfileFragment : Fragment() {
             val intent = Intent(requireActivity(), LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
-            requireActivity().finish()
+            requireActivity().finish() // Finish the current activity holding this fragment
         }
     }
 
