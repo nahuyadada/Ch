@@ -33,8 +33,8 @@ com.example.chowcheck.app-core-ktx-1.15.0-31 C:\Users\andre\.gradle\caches\trans
 com.example.chowcheck.app-fragment-ktx-1.7.1-32 C:\Users\andre\.gradle\caches\transforms-3\8502cf246fd73360f389ffa6c873178e\transformed\fragment-ktx-1.7.1\res
 com.example.chowcheck.app-ui-tooling-release-33 C:\Users\andre\.gradle\caches\transforms-3\878f964a3cd7bfb5759bbea1424502ff\transformed\ui-tooling-release\res
 com.example.chowcheck.app-navigation-ui-2.7.7-34 C:\Users\andre\.gradle\caches\transforms-3\883098a453ad253ea31b33adf08c3752\transformed\navigation-ui-2.7.7\res
-com.example.chowcheck.app-animation-core-release-35 C:\Users\andre\.gradle\caches\transforms-3\8a397cb6f978bf7ea205cdc2535ffeb2\transformed\animation-core-release\res
-com.example.chowcheck.app-constraintlayout-2.2.1-36 C:\Users\andre\.gradle\caches\transforms-3\94fb62fe9da3d05a614916405621bfb0\transformed\constraintlayout-2.2.1\res
+com.example.chowcheck.app-constraintlayout-2.1.4-35 C:\Users\andre\.gradle\caches\transforms-3\89cd4b14af7379bd838400a017618b27\transformed\constraintlayout-2.1.4\res
+com.example.chowcheck.app-animation-core-release-36 C:\Users\andre\.gradle\caches\transforms-3\8a397cb6f978bf7ea205cdc2535ffeb2\transformed\animation-core-release\res
 com.example.chowcheck.app-ui-unit-release-37 C:\Users\andre\.gradle\caches\transforms-3\95f0e1bd4b6f52352086d44ad684f21c\transformed\ui-unit-release\res
 com.example.chowcheck.app-lifecycle-livedata-core-2.8.7-38 C:\Users\andre\.gradle\caches\transforms-3\9634e65e61149f95064960797e7f40f6\transformed\lifecycle-livedata-core-2.8.7\res
 com.example.chowcheck.app-savedstate-1.2.1-39 C:\Users\andre\.gradle\caches\transforms-3\970af36f3adc38301db74ab0c8d2818b\transformed\savedstate-1.2.1\res

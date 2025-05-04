@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="gender_array">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+    <color name="black">#FF000000</color>
+    <color name="nav_item_selected_dark_green">#FF006400</color>
+    <color name="nav_item_unselected_gray">#FF888888</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="white">#FFFFFFFF</color>
+    <string name="Title">Meet the Developers</string>
+    <string name="about_the_developers">About the Developers</string>
+    <string name="app_name">ChowCheck</string>
+    <string name="developer_name_1">Developer Name 1</string>
+    <string name="developer_name_2">Developer Name 2</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="enter_username">Enter Username</string>
+    <string name="go_to_profile">Go to Profile</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login">Login</string>
+    <string name="login_page">Login</string>
+    <string name="logout">Logout</string>
+    <string name="meet_the_developers">Meet the Developers</string>
+    <string name="password">Password</string>
+    <string name="short_bio">Short Bio or Fun Fact</string>
+    <string name="short_bio_or_fun_fact">Short Bio or Fun Fact</string>
+    <string name="user_example_com">user@example.com</string>
+    <string name="user_name">User Name</string>
+    <string name="username">Username</string>
+    <string name="welcome_to_the_homepage">Welcome to the Homepage!</string>
+    <style name="ShapeAppearance.App.Circle" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+    <style name="Theme.ChowCheck" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/nav_item_selected_dark_green</item>
+        <item name="colorPrimaryVariant">@color/nav_item_selected_dark_green</item>
+        <item name="colorOnPrimary">@color/white</item>
+    </style>
+</resources>

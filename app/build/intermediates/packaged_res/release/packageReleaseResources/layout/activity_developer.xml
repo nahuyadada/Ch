@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#C2FFC7">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <Button
+                android:id="@+id/btnBack"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/back"
+                android:contentDescription="Back"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Meet the Developers"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginLeft="16dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/rounded_panel2"
+            android:padding="16dp"
+            android:layout_marginTop="16dp">
+
+            <ImageView
+                android:id="@+id/dev1Image"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/miggyprofile"
+                android:scaleType="centerCrop"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:id="@+id/dev1Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Miguel Matheo C. Rivero"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:id="@+id/dev1About"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="About Me: Passionate Android Developer willing to learn and improve my skills."
+                android:textSize="14sp"
+                android:layout_marginTop="8dp"/>
+
+            <TextView
+                android:id="@+id/dev1Skills"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Skills: C, Python, Java, Android Studio, UI/UX"
+                android:textSize="14sp"
+                android:layout_marginTop="4dp"/>
+
+            <TextView
+                android:id="@+id/dev1Contact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contact: mmcrivero123@email.com"
+                android:textSize="14sp"
+                android:layout_marginTop="4dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/rounded_panel2"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/dev2Image"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                android:src="@drawable/reyesprofile" />
+
+            <TextView
+                android:id="@+id/dev2Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Christian Andrey V. Reyes"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dev2About"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="About Me: I'm a curious and creative person who enjoys exploring new ideas and making things better."
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/dev2Skills"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Skills: C, Python, Java, Android Studio, UI/UX"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/dev2Contact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Contact: christianandrey.reyes@cit.edu"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/rounded_panel2"
+            android:padding="16dp"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:id="@+id/teamVision"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Team Vision: To build apps that empower people to live healthier lives. Empowering individuals to achieve healthier lifestyles through mindful eating. Our goal is to make healthy eating effortless, accessible, and personalized for everyone."
+                android:textSize="16sp"
+                android:textStyle="italic"
+                android:gravity="center"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
