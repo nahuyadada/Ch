@@ -20,10 +20,6 @@
         "source": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-main-72:\\color\\bottom_nav_item_color.xml"
     },
     {
-        "merged": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-debug-70:\\layout_activity_landing.xml.flat",
-        "source": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-main-72:\\layout\\activity_landing.xml"
-    },
-    {
         "merged": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-debug-70:\\mipmap-xhdpi_ic_launcher.png.flat",
         "source": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-main-72:\\mipmap-xhdpi\\ic_launcher.png"
     },
@@ -132,6 +128,10 @@
         "source": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-main-72:\\xml\\backup_rules.xml"
     },
     {
+        "merged": "com.example.chowcheck.app-debug-70:/layout_activity_notification.xml.flat",
+        "source": "com.example.chowcheck.app-main-72:/layout/activity_notification.xml"
+    },
+    {
         "merged": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-debug-70:\\drawable_notifications.png.flat",
         "source": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-main-72:\\drawable\\notifications.png"
     },
@@ -144,10 +144,6 @@
         "source": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-main-72:\\layout\\activity_settings.xml"
     },
     {
-        "merged": "com.example.chowcheck.app-debug-70:/layout_list_item_food.xml.flat",
-        "source": "com.example.chowcheck.app-main-72:/layout/list_item_food.xml"
-    },
-    {
         "merged": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-debug-70:\\drawable_curved_panel.xml.flat",
         "source": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-main-72:\\drawable\\curved_panel.xml"
     },
@@ -158,10 +154,6 @@
     {
         "merged": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-debug-70:\\drawable_profile.png.flat",
         "source": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-main-72:\\drawable\\profile.png"
-    },
-    {
-        "merged": "com.example.chowcheck.app-debug-70:/layout_list_item_food_header.xml.flat",
-        "source": "com.example.chowcheck.app-main-72:/layout/list_item_food_header.xml"
     },
     {
         "merged": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-debug-70:\\layout_fragment_bmi.xml.flat",
@@ -260,6 +252,10 @@
         "source": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-main-72:\\layout\\activity_security.xml"
     },
     {
+        "merged": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-debug-70:\\layout_activity_navigation.xml.flat",
+        "source": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-main-72:\\layout\\activity_navigation.xml"
+    },
+    {
         "merged": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-debug-70:\\mipmap-mdpi_ic_launcher.png.flat",
         "source": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-main-72:\\mipmap-mdpi\\ic_launcher.png"
     },
@@ -284,19 +280,11 @@
         "source": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-main-72:\\drawable\\diary.png"
     },
     {
-        "merged": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-debug-70:\\layout_activity_health_profile.xml.flat",
-        "source": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-main-72:\\layout\\activity_health_profile.xml"
-    },
-    {
         "merged": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-debug-70:\\layout_activity_developer.xml.flat",
         "source": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-main-72:\\layout\\activity_developer.xml"
     },
     {
         "merged": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-debug-70:\\layout_fragment_navigation.xml.flat",
         "source": "C:\\Users\\andre\\.gradle\\daemon\\8.4\\com.example.chowcheck.app-main-72:\\layout\\fragment_navigation.xml"
-    },
-    {
-        "merged": "com.example.chowcheck.app-debug-70:/layout_dialog_add_meal.xml.flat",
-        "source": "com.example.chowcheck.app-main-72:/layout/dialog_add_meal.xml"
     }
 ]

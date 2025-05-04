@@ -3294,6 +3294,9 @@ id bounceBoth
 id bounceEnd
 id bounceStart
 id btnBack
+id btnEditBreakfastTime
+id btnEditDinnerTime
+id btnEditLunchTime
 id btnSaveChanges
 id buttonAddBreakfast
 id buttonAddDinner
@@ -3501,7 +3504,6 @@ id layout
 id layoutBreakfastItems
 id layoutChangePassword
 id layoutDinnerItems
-id layoutLinkedAcc
 id layoutLunchItems
 id left
 id leftCaloriesTextView
@@ -3691,7 +3693,6 @@ id search_plate
 id search_src_text
 id search_voice_btn
 id securityChangePass
-id securityLinkedAcc
 id select_dialog_listview
 id selected
 id selection_type
@@ -3745,7 +3746,6 @@ id stretch
 id submenuarrow
 id submit_area
 id supportScrollUp
-id switch2FA
 id switchGoalReminder
 id switchMealReminder
 id switchProgressReminder
@@ -3768,10 +3768,8 @@ id targetWeightTextView
 id teamVision
 id text
 id text2
-id text2FA
 id textChangePass
 id textEnd
-id textLinkedAcc
 id textSpacerNoButtons
 id textSpacerNoTitle
 id textStart
@@ -3830,6 +3828,9 @@ id transition_scene_layoutid_cache
 id transition_transform
 id triangle
 id tvAddNewFoodInfo
+id tvBreakfastTime
+id tvDinnerTime
+id tvLunchTime
 id txtUsername
 id unchecked
 id uniform
@@ -3980,9 +3981,8 @@ layout activity_calorie_info
 layout activity_change_password
 layout activity_developer
 layout activity_edit_profile
-layout activity_health_profile
-layout activity_landing
 layout activity_login
+layout activity_navigation
 layout activity_notification
 layout activity_register
 layout activity_security

@@ -53,6 +53,9 @@ id averageCaloriesTextView
 id bmiFragment
 id bottomNav
 id btnBack
+id btnEditBreakfastTime
+id btnEditDinnerTime
+id btnEditLunchTime
 id btnSaveChanges
 id buttonAddBreakfast
 id buttonAddDinner
@@ -120,7 +123,6 @@ id lastWeightTextView
 id layoutBreakfastItems
 id layoutChangePassword
 id layoutDinnerItems
-id layoutLinkedAcc
 id layoutLunchItems
 id leftCaloriesTextView
 id leftLabelTextView
@@ -150,7 +152,6 @@ id profilePicture
 id resultsTabFragment
 id saveNotesButton
 id securityChangePass
-id securityLinkedAcc
 id separator
 id settingsListView
 id spinnerActivityLevel
@@ -161,16 +162,13 @@ id statCurrentWeightValue
 id statWeightChangeLabel
 id statWeightChangeValue
 id statsContainer
-id switch2FA
 id switchGoalReminder
 id switchMealReminder
 id switchProgressReminder
 id switchWaterReminder
 id targetWeightTextView
 id teamVision
-id text2FA
 id textChangePass
-id textLinkedAcc
 id textViewBmiCategory
 id textViewBmiHeight
 id textViewBmiValue
@@ -197,6 +195,9 @@ id tilNewFoodName
 id tracker_panels
 id tracker_scrollview
 id tvAddNewFoodInfo
+id tvBreakfastTime
+id tvDinnerTime
+id tvLunchTime
 id txtUsername
 id weeklyWeightPromptTextView
 id weightCardView
@@ -208,9 +209,8 @@ layout activity_calorie_info
 layout activity_change_password
 layout activity_developer
 layout activity_edit_profile
-layout activity_health_profile
-layout activity_landing
 layout activity_login
+layout activity_navigation
 layout activity_notification
 layout activity_register
 layout activity_security

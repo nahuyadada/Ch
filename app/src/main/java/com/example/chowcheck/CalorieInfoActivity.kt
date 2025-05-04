@@ -11,8 +11,6 @@ import android.widget.*
 import java.util.* // For Calendar and Date
 import java.util.concurrent.TimeUnit // For time calculations
 import kotlin.math.abs // Needed for weight difference comparison
-import kotlin.math.max
-import kotlin.math.min
 
 
 class CalorieInfoActivity : Activity() {
@@ -549,7 +547,7 @@ class CalorieInfoActivity : Activity() {
 
     private fun navigateToLanding() {
         // Ensure user data is saved before navigating (handled in the calling logic)
-        val intent = Intent(this, LandingActivity::class.java)
+        val intent = Intent(this, NavigationActivity::class.java)
         startActivity(intent)
         finish() // Close this activity
     }

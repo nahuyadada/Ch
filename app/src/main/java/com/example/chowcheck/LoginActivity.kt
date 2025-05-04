@@ -64,11 +64,10 @@ class LoginActivity : Activity() {
                 editor.apply()
 
                 // Navigate to Landing Activity
-                val intent = Intent(this, LandingActivity::class.java)
+                val intent = Intent(this, NavigationActivity::class.java)
                 startActivity(intent)
                 finish() // Finish LoginActivity
             } else {
-                // Login Failed
                 Toast.makeText(this, "Invalid username or password", Toast.LENGTH_SHORT).show()
             }
         }

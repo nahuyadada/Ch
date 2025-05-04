@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -27,9 +29,6 @@
             android:name=".NotificationActivity"
             android:exported="false" />
         <activity
-            android:name=".PrivacyActivity"
-            android:exported="false" />
-        <activity
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
@@ -39,7 +38,7 @@
             android:name=".SettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".LandingActivity"/>
+            android:name=".NavigationActivity"/>
         <activity
             android:name=".LoginActivity"
             android:exported="true">
@@ -53,6 +52,33 @@
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.ChowCheck" />
+
+        <receiver
+            android:name=".MealReminderReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.example.chowcheck.MEAL_REMINDER"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".WaterReminderReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.example.chowcheck.WATER_REMINDER"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".ProgressReminderReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.example.chowcheck.PROGRESS_REMINDER"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

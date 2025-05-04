@@ -30,10 +30,7 @@ class SecurityActivity : Activity() {
         }
 
         try {
-            switch2FA = findViewById(R.id.switch2FA)
-            // *** Find the LinearLayouts by their new IDs ***
             layoutChangePass = findViewById(R.id.layoutChangePassword)
-            layoutLinkedAcc = findViewById(R.id.layoutLinkedAcc)
 
             // Set listeners on the LinearLayouts
             layoutChangePass.setOnClickListener {
@@ -42,20 +39,7 @@ class SecurityActivity : Activity() {
                 startActivity(intent)
             }
 
-            layoutLinkedAcc.setOnClickListener {
-                Toast.makeText(this, "Navigating to Manage Linked Accounts.", Toast.LENGTH_SHORT).show()
-                // val intent = Intent(this, ManageLinkedAccountsActivity::class.java)
-                // startActivity(intent)
-            }
 
-            // Switch listener remains the same
-            switch2FA.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    Toast.makeText(this, "2FA Enabled", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this, "2FA Disabled", Toast.LENGTH_SHORT).show()
-                }
-            }
         } catch (e: Exception) {
             // Consider more specific error handling if needed
             e.printStackTrace()
