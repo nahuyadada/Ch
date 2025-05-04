@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/diaryFragment">
+
+    <fragment
+        android:id="@+id/diaryFragment"
+        android:name="com.example.chowcheck.frag.DiaryFragment"
+        android:label="Daily Diary"
+        tools:layout="@layout/fragment_diary" >
+
+        <action
+            android:id="@+id/action_diaryFragment_to_foodLogFragment"
+            app:destination="@id/foodLogFragment"
+            app:launchSingleTop="true"
+            app:restoreState="true"
+            app:popUpTo="@id/main_nav"
+            app:popUpToSaveState="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/foodLogFragment"
+        android:name="com.example.chowcheck.frag.FoodLogFragment"
+        android:label="Food Log"
+        tools:layout="@layout/fragment_food_log" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/resultsTabFragment"
+        android:name="com.example.chowcheck.frag.ResultsTabFragment"
+        android:label="Progress &amp; Results"
+        tools:layout="@layout/fragment_results_tab" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.chowcheck.frag.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" >
+
+        <action
+            android:id="@+id/action_profileFragment_to_resultsTabFragment"
+            app:destination="@id/resultsTabFragment"
+            app:launchSingleTop="true"
+            app:restoreState="true"
+            app:popUpTo="@id/main_nav"
+            app:popUpToSaveState="true" />
+
+        <action
+            android:id="@+id/action_profileFragment_to_bmiFragment"
+            app:destination="@id/bmiFragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/bmiFragment"
+        android:name="com.example.chowcheck.frag.BmiFragment"
+        android:label="BMI Calculator"
+        tools:layout="@layout/fragment_bmi" />
+
+</navigation>

@@ -48,6 +48,7 @@ drawable settings
 id action_diaryFragment_to_foodLogFragment
 id action_profileFragment_to_bmiFragment
 id action_profileFragment_to_resultsTabFragment
+id actvFood
 id averageCaloriesTextView
 id bmiFragment
 id bottomNav
@@ -59,6 +60,7 @@ id buttonAddLunch
 id buttonBack
 id buttonChangePassword
 id buttonLogin
+id buttonManageFoodDefinitions
 id buttonRegister
 id buttonSubmitInfo
 id calendarIconImageView
@@ -100,8 +102,10 @@ id editTextWeight
 id editTextWeightGoal
 id editUserDetails
 id edtCalories
-id edtFood
 id edtGrams
+id edtNewFoodCaloriesPerServing
+id edtNewFoodGramsPerServing
+id edtNewFoodName
 id foodLogFragment
 id fragment_container
 id goalCaloriesTextView
@@ -184,8 +188,15 @@ id textViewLoginLink
 id textViewLunchLabel
 id textViewLunchTotalCalories
 id textViewTitle
+id tilCalories
+id tilFood
+id tilGrams
+id tilNewFoodCaloriesPerServing
+id tilNewFoodGramsPerServing
+id tilNewFoodName
 id tracker_panels
 id tracker_scrollview
+id tvAddNewFoodInfo
 id txtUsername
 id weeklyWeightPromptTextView
 id weightCardView
@@ -204,6 +215,7 @@ layout activity_notification
 layout activity_register
 layout activity_security
 layout activity_settings
+layout dialog_add_food_definition
 layout dialog_add_meal
 layout fragment_bmi
 layout fragment_diary
@@ -212,6 +224,7 @@ layout fragment_navigation
 layout fragment_profile
 layout fragment_results_tab
 layout list_item_food
+layout list_item_food_header
 layout list_item_profile_option
 menu bottom_nav_menu
 mipmap chowcheck
